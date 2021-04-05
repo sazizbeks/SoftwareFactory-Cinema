@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/user/registration").not().authenticated()
                 .antMatchers("/registration").not().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

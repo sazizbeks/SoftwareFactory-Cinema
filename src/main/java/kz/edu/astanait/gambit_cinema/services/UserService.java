@@ -1,5 +1,6 @@
 package kz.edu.astanait.gambit_cinema.services;
 
+import kz.edu.astanait.gambit_cinema.exceptions.RegistrationException;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.repositories.RoleRepository;
 import kz.edu.astanait.gambit_cinema.repositories.UserRepository;
@@ -21,16 +22,18 @@ public class UserService implements IUserService {
         this.roleRepository = roleRepository;
     }
 
-
-    public boolean register(User user) {
-        if(userRepository.existsByUsername(user.getUsername())){
-            return false;
+    @Override
+    public void register(User user) throws RegistrationException {
+        if (user.getUsername() == null || user.getUsername().isEmpty()) {
+            throw new RegistrationException("Username is empty");
+        }
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new RegistrationException("User with such username exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(roleRepository.getOne(2L));
+        user.setRole(roleRepository.findByName("USER"));
 
         userRepository.save(user);
-        return true;
     }
 
 }
