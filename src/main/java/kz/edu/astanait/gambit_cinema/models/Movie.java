@@ -76,4 +76,17 @@ public class Movie {
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", director='" + director + '\'' +
+                ", actors='" + actors + '\'' +
+                ", ageRating=" + ageRating +
+                ", genres=" + genres +
+                '}';
+    }
 }

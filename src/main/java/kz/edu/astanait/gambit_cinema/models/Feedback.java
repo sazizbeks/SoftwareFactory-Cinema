@@ -47,4 +47,14 @@ public class Feedback {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "id=" + id +
+                ", stars=" + stars +
+                ", comment='" + comment + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }
