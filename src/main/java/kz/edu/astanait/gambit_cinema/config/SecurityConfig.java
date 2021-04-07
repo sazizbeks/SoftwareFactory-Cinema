@@ -41,7 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers(HttpMethod.GET, "/api/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/user/registration").not().authenticated()
+
+                .antMatchers(HttpMethod.POST,
+                        "/api/user/registration",
+                        "/api/user/login")
+                .not().authenticated()
+
                 .antMatchers("/registration").not().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -73,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**");
     }
+
     private AuthenticationSuccessHandler authenticationSuccessHandler() {
         return ((request, response, authentication) -> {
             String username = request.getParameter("username");

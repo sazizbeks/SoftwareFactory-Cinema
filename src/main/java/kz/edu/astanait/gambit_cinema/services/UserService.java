@@ -1,5 +1,7 @@
 package kz.edu.astanait.gambit_cinema.services;
 
+import kz.edu.astanait.gambit_cinema.exceptions.BadCredentialsException;
+import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.exceptions.RegistrationException;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.repositories.RoleRepository;
@@ -34,6 +36,28 @@ public class UserService implements IUserService {
         user.setRole(roleRepository.findByName("USER"));
 
         userRepository.save(user);
+    }
+
+    @Override
+    public User validateAndReturnUserOrThrowException(String username, String password) throws BadCredentialsException, BadRequestException {
+        if (username.isEmpty()) {
+            throw new BadRequestException("Username is empty");
+        }
+        if (password.isEmpty()) {
+            throw new BadRequestException("Password is empty");
+        }
+
+        User user = userRepository.findByUsername(username);
+
+        if (user != null) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            } else {
+                throw new BadCredentialsException("Password is not correct");
+            }
+        } else {
+            throw new BadRequestException("No such user with this username");
+        }
     }
 
 }
