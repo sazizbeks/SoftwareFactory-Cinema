@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,8 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    private Date birthDate;
 
     public Set<GrantedAuthority> getGrantedAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = role.getAuthorities().stream()
@@ -76,6 +79,14 @@ public class User {
         this.role = role;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -84,6 +95,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
+                ", birthDate=" + birthDate +
                 '}';
     }
 }
