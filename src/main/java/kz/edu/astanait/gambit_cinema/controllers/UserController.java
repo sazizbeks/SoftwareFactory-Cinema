@@ -1,10 +1,15 @@
 package kz.edu.astanait.gambit_cinema.controllers;
 
-import kz.edu.astanait.gambit_cinema.exceptions.RegistrationException;
+import kz.edu.astanait.gambit_cinema.ValidationMarkers;
+import kz.edu.astanait.gambit_cinema.exceptions.PasswordConfirmationException;
+import kz.edu.astanait.gambit_cinema.exceptions.UserExistsException;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,13 +31,24 @@ public class UserController {
         return mav;
     }
 
+
     @PostMapping("/registration")
-    public String register(@ModelAttribute("userForm") User user) {
+    public String register(@ModelAttribute("userForm") @Validated(ValidationMarkers.OnRegistration.class) User user,
+                           BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
         try {
             userService.register(user);
-        } catch (RegistrationException e) {
-            e.printStackTrace();
+        } catch (UserExistsException e) {
+            model.addAttribute("userExistsError", e.getMessage());
+            return "registration";
+        } catch (PasswordConfirmationException e) {
+            model.addAttribute("rePasswordError", e.getMessage());
+            return "registration";
         }
-        return "login";
+
+        return "redirect:/login";
     }
 }

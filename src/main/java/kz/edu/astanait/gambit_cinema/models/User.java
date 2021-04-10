@@ -1,9 +1,14 @@
 package kz.edu.astanait.gambit_cinema.models;
 
+import kz.edu.astanait.gambit_cinema.ValidationMarkers;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,18 +20,38 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(groups = {ValidationMarkers.OnRegistration.class, ValidationMarkers.OnLogin.class},
+            message = "Username cannot be empty")
     @Column(unique = true)
     private String username;
 
+    @NotBlank(groups = {ValidationMarkers.OnRegistration.class, ValidationMarkers.OnLogin.class},
+            message = "Password cannot be empty")
+    @Length(groups = {ValidationMarkers.OnRegistration.class},
+            min = 7, max = 32, message = "Minimum length of password is 7, maximum 32")
     private String password;
 
+    @Transient
+    @NotBlank(groups = ValidationMarkers.OnRegistration.class,
+            message = "Password confirmation cannot be empty")
+    private String rePassword;
+
+    @NotBlank(groups = ValidationMarkers.OnRegistration.class,
+            message = "Email cannot be empty")
+    @Email(groups = ValidationMarkers.OnRegistration.class,
+            message = "Wrong email")
     private String email;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @NotNull(groups = ValidationMarkers.OnRegistration.class,
+            message = "Date cannot be empty")
     private Date birthDate;
+
+    public User() {
+    }
 
     public Set<GrantedAuthority> getGrantedAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = role.getAuthorities().stream()
@@ -34,9 +59,6 @@ public class User {
                 .collect(Collectors.toSet());
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         return grantedAuthorities;
-    }
-
-    public User() {
     }
 
     public Long getId() {
@@ -85,6 +107,14 @@ public class User {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
     }
 
     @Override

@@ -44,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST,
                         "/api/user/registration",
-                        "/api/user/login")
-                .not().authenticated()
+                        "/api/user/login").not().authenticated()
+                .antMatchers("/api/movie/**").permitAll()
 
                 .antMatchers("/registration").not().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
