@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Controller
 public class UserController {
     private final IUserService userService;
@@ -40,6 +43,7 @@ public class UserController {
         }
 
         try {
+            user.setBirthDate(new Date(2002, Calendar.APRIL,29));
             userService.register(user);
         } catch (UserExistsException e) {
             model.addAttribute("userExistsError", e.getMessage());

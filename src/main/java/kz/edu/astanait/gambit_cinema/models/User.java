@@ -46,8 +46,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @NotNull(groups = ValidationMarkers.OnRegistration.class,
-            message = "Date cannot be empty")
+
     private Date birthDate;
 
     public User() {

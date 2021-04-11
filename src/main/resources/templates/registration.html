@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link th:replace="includes/bootstrapCSS">
+    <style>
+        form{
+            margin-top: 30rem;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center bg-light">
+
+<form action="/registration" method="post" class="col-md-4 align-self-center translate-middle-y d-flex flex-column" th:object="${userForm}">
+    <h2 class="d-flex justify-content-center">Registration form</h2>
+
+    <div class="mb-3">
+        <label for="usernameInput" class="form-label">Username</label>
+        <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameInputDesc" name="username" th:field="*{username}">
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        <div th:if="${userExistsError != null}" th:text="${userExistsError}"></div>
+    </div>
+    <div class="mb-3">
+        <label for="passwordInput" class="form-label">Password</label>
+        <input type="password" class="form-control" id="passwordInput" name="password" th:field="*{password}">
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+    <div class="mb-3">
+        <label for="rePasswordInput" class="form-label">Re write password</label>
+        <input type="password" class="form-control" id="rePasswordInput" name="re-password" th:field="*{rePassword}">
+        <div th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"></div>
+        <div th:if="${rePasswordError != null}" th:text="${rePasswordError}"></div>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" th:field="*{email}">
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    </div>
+<!--    <div class="mb-3">-->
+<!--        <label for="ageInput" class="form-label">Date of birth</label>-->
+<!--        <input type="date" class="form-control" id="ageInput" name="age" th:field="*{birthDate}">-->
+<!--        <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>-->
+<!--    </div>-->
+    <button type="submit" class="btn btn-primary" id="submitBtn" >Submit</button>
+    <a href="/login" class="link-primary">Have an account? Click to login</a>
+</form>
+
+<div th:replace="includes/bootstrapJS"></div>
+<div th:replace="includes/JQuery"></div>
+<script type="text/javascript" th:src="@{/js/registrationValidation.js}"></script>
+</body>
+</html>
