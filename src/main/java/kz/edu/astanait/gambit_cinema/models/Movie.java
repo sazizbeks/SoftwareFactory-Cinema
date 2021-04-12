@@ -1,6 +1,10 @@
 package kz.edu.astanait.gambit_cinema.models;
 
+import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -9,12 +13,36 @@ import java.util.Set;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = {ValidationMarkers.OnUpdate.class,
+            ValidationMarkers.OnDelete.class},
+    message = "Id cannot be null")
     private Long id;
+
+    @NotBlank(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+    message = "Name cannot be empty")
     private String name;
+
+    @NotNull(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+    message = "Release date cannot be empty")
     private Date releaseDate;
+
+    @NotBlank(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "Director cannot be empty")
     private String director;
+
+    @NotBlank(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "Actors cannot be empty")
     private String actors;
+
+    @NotNull(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "Age rating cannot be empty")
     private Byte ageRating;
+
     @ManyToMany
     private Set<Genre> genres;
 

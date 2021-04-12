@@ -26,7 +26,7 @@ public class UserAPI {
     public ResponseEntity<?> register(@RequestBody @Validated(ValidationMarkers.OnRegistration.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest()
-                    .body(bindingResult.getAllErrors());
+                    .body(bindingResult.getFieldErrors());
         }
 
         try {
@@ -35,7 +35,7 @@ public class UserAPI {
         } catch (UserExistsException | PasswordConfirmationException | BirthDateException e) {
             return ResponseEntity
                     .badRequest()
-                    .body(e.getMessage());
+                    .body(e);
         }
     }
 
@@ -43,15 +43,15 @@ public class UserAPI {
     public ResponseEntity<?> login(@RequestBody @Validated(ValidationMarkers.OnLogin.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest()
-                    .body(bindingResult.getAllErrors());
+                    .body(bindingResult.getFieldErrors());
         }
         try {
             User validatedUser = userService.validateAndReturnUserOrThrowException(user.getUsername(), user.getPassword());
             return ResponseEntity.ok(validatedUser);
         } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e);
         }
     }
 }
