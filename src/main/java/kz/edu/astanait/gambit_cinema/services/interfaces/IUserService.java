@@ -1,9 +1,6 @@
 package kz.edu.astanait.gambit_cinema.services.interfaces;
 
-import kz.edu.astanait.gambit_cinema.exceptions.BadCredentialsException;
-import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
-import kz.edu.astanait.gambit_cinema.exceptions.PasswordConfirmationException;
-import kz.edu.astanait.gambit_cinema.exceptions.UserExistsException;
+import kz.edu.astanait.gambit_cinema.exceptions.*;
 import kz.edu.astanait.gambit_cinema.models.User;
 
 public interface IUserService {
@@ -15,7 +12,7 @@ public interface IUserService {
      *                               1) username is null or empty
      *                               2) user with user.username username is exists in database
      */
-    void register(User user) throws UserExistsException, PasswordConfirmationException;
+    void register(User user) throws UserExistsException, PasswordConfirmationException, BirthDateException;
 
     /**
      * Checks if inputs are valid, then returns user

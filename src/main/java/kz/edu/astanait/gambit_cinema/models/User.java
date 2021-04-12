@@ -1,6 +1,6 @@
 package kz.edu.astanait.gambit_cinema.models;
 
-import kz.edu.astanait.gambit_cinema.ValidationMarkers;
+import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,7 +44,6 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
-
 
     private Date birthDate;
 

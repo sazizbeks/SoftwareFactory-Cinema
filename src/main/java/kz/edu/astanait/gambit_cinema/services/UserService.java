@@ -1,13 +1,11 @@
 package kz.edu.astanait.gambit_cinema.services;
 
-import kz.edu.astanait.gambit_cinema.exceptions.BadCredentialsException;
-import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
-import kz.edu.astanait.gambit_cinema.exceptions.PasswordConfirmationException;
-import kz.edu.astanait.gambit_cinema.exceptions.UserExistsException;
+import kz.edu.astanait.gambit_cinema.exceptions.*;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.repositories.RoleRepository;
 import kz.edu.astanait.gambit_cinema.repositories.UserRepository;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IUserService;
+import kz.edu.astanait.gambit_cinema.validation.BirthDateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,13 +24,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void register(User user) throws UserExistsException, PasswordConfirmationException {
+    public void register(User user) throws UserExistsException, PasswordConfirmationException, BirthDateException {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserExistsException("User with such username exists");
         }
         if(!user.getPassword().equals(user.getRePassword())){
             throw new PasswordConfirmationException("Passwords are not equal");
         }
+        if(!BirthDateValidator.isValid(user.getBirthDate())){
+            throw new BirthDateException("Birth date is not correct");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(roleRepository.findByName("USER"));
 
