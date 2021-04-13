@@ -3,6 +3,7 @@ package kz.edu.astanait.gambit_cinema.rest;
 import kz.edu.astanait.gambit_cinema.exceptions.*;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IUserService;
+import kz.edu.astanait.gambit_cinema.tools.ExceptionConverter;
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class UserAPI {
     public ResponseEntity<?> register(@RequestBody @Validated(ValidationMarkers.OnRegistration.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest()
-                    .body(bindingResult.getFieldErrors());
+                    .body(ExceptionConverter.convertValidationError(bindingResult));
         }
 
         try {
@@ -43,7 +44,7 @@ public class UserAPI {
     public ResponseEntity<?> login(@RequestBody @Validated(ValidationMarkers.OnLogin.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest()
-                    .body(bindingResult.getFieldErrors());
+                    .body(ExceptionConverter.convertValidationError(bindingResult));
         }
         try {
             User validatedUser = userService.validateAndReturnUserOrThrowException(user.getUsername(), user.getPassword());
