@@ -1,21 +1,29 @@
 package kz.edu.astanait.gambit_cinema.services;
 
+import javassist.NotFoundException;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
+import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.repositories.MovieRepository;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 @Service
 public class MovieService implements IMovieService {
+
     private final MovieRepository movieRepository;
+    private final Random random;
 
     @Autowired
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
+        this.random = new Random();
     }
 
     @Override
@@ -25,6 +33,17 @@ public class MovieService implements IMovieService {
             return optionalMovie.get();
         }
         throw new BadRequestException("No such ID");
+    }
+
+    @Override
+    public Movie getRandomMovie(Set<Genre> genres) throws NotFoundException {
+        List<Movie> movies = movieRepository.getDistinctByGenresIn(genres);
+        int count = movies.size();
+        if (count != 0) {
+            return movies.get(random.nextInt(count));
+        } else {
+            throw new NotFoundException("Movies not found");
+        }
     }
 
     @Override

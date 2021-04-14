@@ -1,6 +1,8 @@
 package kz.edu.astanait.gambit_cinema.rest;
 
+import javassist.NotFoundException;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
+import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
 import kz.edu.astanait.gambit_cinema.tools.ExceptionManager;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/movie")
@@ -23,7 +27,7 @@ public class MovieAPI {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<?> getMovieById(@PathVariable Long id){
+    public ResponseEntity<?> getMovieById(@PathVariable Long id) {
         try {
             Movie movie = movieService.getById(id);
             return ResponseEntity
@@ -33,17 +37,26 @@ public class MovieAPI {
         }
     }
 
+    @GetMapping("/random")
+    public ResponseEntity<?> count(@RequestBody Set<Genre> genres) {
+        try {
+            return ResponseEntity.ok(movieService.getRandomMovie(genres));
+        } catch (NotFoundException e) {
+            return ExceptionManager.getResponseEntity(HttpStatus.NOT_FOUND, e);
+        }
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> addMovie(@RequestBody @Validated(ValidationMarkers.OnCreate.class) Movie movie,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,bindingResult);
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, bindingResult);
         }
         try {
             movieService.add(movie);
             return ResponseEntity.ok(movie);
         } catch (BadRequestException e) {
-            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,e);
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
         }
     }
 
@@ -51,14 +64,14 @@ public class MovieAPI {
     public ResponseEntity<?> editMovie(@RequestBody @Validated(ValidationMarkers.OnUpdate.class) Movie movie,
                                        BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,bindingResult);
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, bindingResult);
         }
 
         try {
             movieService.edit(movie);
             return ResponseEntity.ok(movie);
         } catch (BadRequestException e) {
-            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,e);
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
         }
     }
 
@@ -68,7 +81,7 @@ public class MovieAPI {
             movieService.delete(movie);
             return ResponseEntity.ok("Movie successfully deleted");
         } catch (BadRequestException e) {
-            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,e);
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
         }
     }
 }
