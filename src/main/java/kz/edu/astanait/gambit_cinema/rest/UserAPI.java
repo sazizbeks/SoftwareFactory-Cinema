@@ -3,7 +3,7 @@ package kz.edu.astanait.gambit_cinema.rest;
 import kz.edu.astanait.gambit_cinema.exceptions.*;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IUserService;
-import kz.edu.astanait.gambit_cinema.tools.ExceptionConverter;
+import kz.edu.astanait.gambit_cinema.tools.ExceptionManager;
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,33 +26,28 @@ public class UserAPI {
     @PostMapping(path = "/registration", consumes = "application/json")
     public ResponseEntity<?> register(@RequestBody @Validated(ValidationMarkers.OnRegistration.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest()
-                    .body(ExceptionConverter.convertValidationError(bindingResult));
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,bindingResult);
         }
-
         try {
             userService.register(user);
             return ResponseEntity.ok(user);
         } catch (UserExistsException | PasswordConfirmationException | BirthDateException e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e);
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,e);
         }
     }
 
     @PostMapping(path = "/login", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody @Validated(ValidationMarkers.OnLogin.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest()
-                    .body(ExceptionConverter.convertValidationError(bindingResult));
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,bindingResult);
         }
         try {
             User validatedUser = userService.validateAndReturnUserOrThrowException(user.getUsername(), user.getPassword());
             return ResponseEntity.ok(validatedUser);
         } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().body(e);
+            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST,e);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e);
+            return ExceptionManager.getResponseEntity(HttpStatus.UNAUTHORIZED,e);
         }
     }
 }
