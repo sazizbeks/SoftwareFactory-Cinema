@@ -29,8 +29,8 @@ public class MovieService implements IMovieService {
 
     @Override
     public void add(Movie movie) throws BadRequestException {
-        if(movie.getId()!=null){
-           throw new BadRequestException("Movie ID should not be specified");
+        if (movie.getId() != null) {
+            throw new BadRequestException("Movie ID should not be specified");
         }
         movieRepository.save(movie);
     }
