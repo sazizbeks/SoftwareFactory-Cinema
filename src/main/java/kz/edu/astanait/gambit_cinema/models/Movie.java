@@ -15,17 +15,17 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(groups = {ValidationMarkers.OnUpdate.class,
             ValidationMarkers.OnDelete.class},
-    message = "Id cannot be null")
+            message = "Id cannot be null")
     private Long id;
 
     @NotBlank(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
-    message = "Name cannot be empty")
+            message = "Name cannot be empty")
     private String name;
 
     @NotNull(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
-    message = "Release date cannot be empty")
+            message = "Release date cannot be empty")
     private Date releaseDate;
 
     @NotBlank(groups = {ValidationMarkers.OnCreate.class,
@@ -42,6 +42,16 @@ public class Movie {
             ValidationMarkers.OnUpdate.class},
             message = "Age rating cannot be empty")
     private Byte ageRating;
+
+    @NotNull(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "Image URL cannot be empty")
+    private String imgUrl;
+
+    @NotNull(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "Description cannot be empty")
+    private String description;
 
     @ManyToMany
     private Set<Genre> genres;
@@ -105,6 +115,22 @@ public class Movie {
         this.genres = genres;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -114,6 +140,8 @@ public class Movie {
                 ", director='" + director + '\'' +
                 ", actors='" + actors + '\'' +
                 ", ageRating=" + ageRating +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", description='" + description + '\'' +
                 ", genres=" + genres +
                 '}';
     }
