@@ -1,0 +1,6 @@
+framework module Pods_SoftFact {
+  umbrella header "Pods-SoftFact-umbrella.h"
+
+  export *
+  module * { export * }
+}
