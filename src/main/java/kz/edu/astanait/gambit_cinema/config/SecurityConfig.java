@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity security) throws Exception {
+
         security
                 .csrf().disable()
                 .authorizeRequests()
@@ -46,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/registration",
                         "/api/user/login").not().authenticated()
                 .antMatchers("/api/movie/**").permitAll()
-
+                .antMatchers("/index","/").permitAll()
                 .antMatchers("/registration").not().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -76,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**").anyRequest();
     }
 
     private AuthenticationSuccessHandler authenticationSuccessHandler() {
