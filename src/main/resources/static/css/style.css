@@ -1,46 +1,26 @@
-body{
-    background-image: url(https://cdn.hipwallpaper.com/i/11/67/862aGB.jpeg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-}
-
-.navbar{
-    border-radius: 0 0 20px 20px;
-}
-
-.dropdown:hover>.dropdown-menu{
-    display: block;
-}
-
-.dropdown-menu > li > a:hover {
-    background-color: #212529;
-    color: white;
-}
-
-.carousel-control-prev{
+.carousel-control-prev {
     width: 10%;
     height: 70%;
 }
 
-.carousel-control-next{
+.carousel-control-next {
     width: 10%;
     height: 70%;
 }
 
-#myCarousel{
+#myCarousel {
     border-radius: 20px;
 }
 
-.carousel-item{
+.carousel-item {
     height: 32rem;
-    background:#000;
+    background: #000;
     color: white;
     position: relative;
     border-radius: 50px;
 }
 
-.carouselContainer{
+.carouselContainer {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -49,7 +29,7 @@ body{
     text-align: center;
 }
 
-.overlay-image{
+.overlay-image {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -61,26 +41,14 @@ body{
     border-radius: 50px;
 }
 
-#seeMoreImg{
+#seeMoreImg {
     display: block;
     position: relative;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-}
-
-.btn.btn-search{
-    border-radius: 0;
-    height: 50px;
-    color: #fff;
-}
-
-.search-input:focus{
-    outline: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
 }
 
 .cardImg {
@@ -88,38 +56,3 @@ body{
     height: 15vw;
     object-fit: cover;
 }
-
-.footer{
-    background: #131A20;
-}
-
-@media screen and (min-width: 1025px){
-    .navLinks{
-        margin-left: 22rem;
-    }
-}
-
-@media screen and (max-width: 1024px) and (min-width:769px){
-
-    nav{
-        background: #212529;
-    }
-    .navLinks{
-        margin-left: 12rem;
-    }
-}
-
-@media screen and (max-width: 768px){
-
-    nav{
-        background: #212529;
-    }
-    ul>li>a{
-        text-align: center;
-    }
-    ul{
-        text-align: center;
-    }
-}
-
-

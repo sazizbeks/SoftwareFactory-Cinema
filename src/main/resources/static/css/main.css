@@ -1,0 +1,60 @@
+.navbar {
+    border-radius: 0 0 20px 20px;
+}
+
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu > li > a:hover {
+    background-color: #212529;
+    color: white;
+}
+
+@media screen and (min-width: 1025px) {
+    .navLinks {
+        margin-left: 22rem;
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+
+    nav {
+        background: #212529;
+    }
+
+    .navLinks {
+        margin-left: 12rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    nav {
+        background: #212529;
+    }
+
+    ul > li > a {
+        text-align: center;
+    }
+
+    ul {
+        text-align: center;
+    }
+}
+
+.btn.btn-search {
+    border-radius: 0;
+    height: 50px;
+    color: #fff;
+}
+
+.search-input:focus {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.footer {
+    background: #131A20;
+}
