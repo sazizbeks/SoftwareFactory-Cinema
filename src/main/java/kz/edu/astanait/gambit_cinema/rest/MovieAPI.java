@@ -47,7 +47,8 @@ public class MovieAPI {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addMovie(@RequestBody @Validated(ValidationMarkers.OnCreate.class) Movie movie,
+    public ResponseEntity<?> addMovie(@RequestBody @Validated({ValidationMarkers.OnCreate.class,
+            ValidationMarkers.APIOnCreate.class}) Movie movie,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, bindingResult);
@@ -61,7 +62,8 @@ public class MovieAPI {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editMovie(@RequestBody @Validated(ValidationMarkers.OnUpdate.class) Movie movie,
+    public ResponseEntity<?> editMovie(@RequestBody @Validated({ValidationMarkers.OnUpdate.class,
+            ValidationMarkers.APIOnUpdate.class}) Movie movie,
                                        BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, bindingResult);

@@ -7,6 +7,9 @@ import org.springframework.validation.BindingResult;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Converts exception to messages for API
+ */
 public class ExceptionManager {
     public static ResponseEntity<?> getResponseEntity(HttpStatus status, Exception e) {
         return ResponseEntity.status(status).body(toList(e));

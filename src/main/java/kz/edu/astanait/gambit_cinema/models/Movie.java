@@ -5,7 +5,7 @@ import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Set;
 
 @Entity
@@ -23,10 +23,10 @@ public class Movie {
             message = "Name cannot be empty")
     private String name;
 
-    @NotNull(groups = {ValidationMarkers.OnCreate.class,
-            ValidationMarkers.OnUpdate.class},
+    @NotNull(groups = {ValidationMarkers.APIOnCreate.class,
+            ValidationMarkers.APIOnUpdate.class},
             message = "Release date cannot be empty")
-    private Date releaseDate;
+    private Calendar releaseDate;
 
     @NotBlank(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
@@ -75,11 +75,11 @@ public class Movie {
         this.name = name;
     }
 
-    public Date getReleaseDate() {
+    public Calendar getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(Calendar releaseDate) {
         this.releaseDate = releaseDate;
     }
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${message}"></title>
+    <link th:replace="includes/bootstrapCSS">
+</head>
+<body class="d-flex justify-content-center bg-light">
+
+<div class="col-md-4 align-self-center position-absolute top-50 translate-middle-y d-flex flex-column">
+    <h2 th:text="${message}"></h2>
+    <p>You will be redirected in 3 seconds</p>
+</div>
+
+<div th:replace="includes/JQuery"></div>
+<script>
+    setTimeout(function(){
+        window.location.href = '/';
+    }, 3000);
+</script>
+</body>
+</html>

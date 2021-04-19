@@ -49,7 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/movie/**").permitAll()
                 .antMatchers("/index","/").permitAll()
                 .antMatchers("/registration").not().authenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**",
+                        "/movie/add",
+                        "/movie/edit",
+                        "/movie/delete").hasRole("ADMIN")
                 .anyRequest().authenticated()
 
                 .and()

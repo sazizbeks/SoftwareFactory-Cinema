@@ -15,4 +15,9 @@ public interface ValidationMarkers {
 
     interface OnDelete{
     }
+
+    interface APIOnCreate{
+    }
+    interface APIOnUpdate{
+    }
 }

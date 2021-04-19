@@ -2,26 +2,31 @@ package kz.edu.astanait.gambit_cinema.controllers;
 
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Movie;
+import kz.edu.astanait.gambit_cinema.repositories.GenreRepository;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
+import kz.edu.astanait.gambit_cinema.tools.DatePickerConverter;
+import kz.edu.astanait.gambit_cinema.tools.StaticValues;
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/movie")
 public class MovieController {
-    private static final String ID_ERROR_MESSAGE = "Something went wrong";
-    private static final String SPLASH_SCREEN_TEMPLATE = "splash-screen";
-    private static final String MOVIE_TEMPLATE = "movie-page";
 
     private final IMovieService movieService;
+    private final GenreRepository genreRepository;
 
     @Autowired
-    public MovieController(IMovieService movieService) {
+    public MovieController(IMovieService movieService, GenreRepository genreRepository) {
         this.movieService = movieService;
+        this.genreRepository = genreRepository;
     }
 
     @GetMapping("/{id}")
@@ -29,37 +34,73 @@ public class MovieController {
         try {
             Movie movie = movieService.getById(id);
             model.addAttribute("movie", movie);
-            return MOVIE_TEMPLATE;
+            return StaticValues.Templates.MOVIE_PAGE;
         } catch (BadRequestException e) {
             model.addAttribute("message", e.getMessage());
-            return SPLASH_SCREEN_TEMPLATE;
+            return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
         }
+    }
+
+    private void addGenresToModel(Model model){
+        model.addAttribute("genres",genreRepository.findAll());
+    }
+
+    @GetMapping("/add")
+    public String addMoviePage(Model model) {
+        model.addAttribute("movie", new Movie());
+        model.addAttribute("type", "add");
+        addGenresToModel(model);
+        return StaticValues.Templates.ADD_EDIT_MOVIE;
+    }
+
+    @GetMapping("/edit")
+    public String editMoviePage(@RequestParam Long id, Model model) {
+        try {
+            model.addAttribute("movie", movieService.getById(id));
+            model.addAttribute("type", "edit");
+            addGenresToModel(model);
+        } catch (BadRequestException e) {
+            model.addAttribute("message", StaticValues.ID_ERROR_MESSAGE);
+            return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
+        }
+        return StaticValues.Templates.ADD_EDIT_MOVIE;
     }
 
     @PostMapping("/add")
     public String add(@ModelAttribute("movie")
-                      @Validated(ValidationMarkers.OnCreate.class) Movie movie,
+                      @Validated(ValidationMarkers.OnCreate.class) Movie movie, BindingResult bindingResult,
+                      HttpServletRequest request,
                       Model model) {
+        if(bindingResult.hasErrors()){
+            return StaticValues.Templates.ADD_EDIT_MOVIE;
+        }
+        movie.setReleaseDate(DatePickerConverter.convertRequestParams(request));
+
         try {
             movieService.add(movie);
             model.addAttribute("message", "Movie successfully added");
         } catch (BadRequestException e) {
-            model.addAttribute("message", ID_ERROR_MESSAGE);
+            model.addAttribute("message", StaticValues.ID_ERROR_MESSAGE);
         }
-        return SPLASH_SCREEN_TEMPLATE;
+        return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
     }
 
     @PostMapping("/edit")
     public String edit(@ModelAttribute("movie")
-                       @Validated(ValidationMarkers.OnUpdate.class) Movie movie,
-                       Model model) {
+                       @Validated(ValidationMarkers.OnUpdate.class) Movie movie,BindingResult bindingResult,
+                       Model model, HttpServletRequest request) {
+        if(bindingResult.hasErrors()){
+            return StaticValues.Templates.ADD_EDIT_MOVIE;
+        }
+        movie.setReleaseDate(DatePickerConverter.convertRequestParams(request));
+
         try {
             movieService.edit(movie);
             model.addAttribute("message", "Movie successfully edited");
         } catch (BadRequestException e) {
-            model.addAttribute("message", ID_ERROR_MESSAGE);
+            model.addAttribute("message", StaticValues.ID_ERROR_MESSAGE);
         }
-        return SPLASH_SCREEN_TEMPLATE;
+        return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
     }
 
     @PostMapping("/delete")
@@ -70,8 +111,8 @@ public class MovieController {
             movieService.delete(movie);
             model.addAttribute("message", "Movie successfully deleted");
         } catch (BadRequestException e) {
-            model.addAttribute("message", ID_ERROR_MESSAGE);
+            model.addAttribute("message", StaticValues.ID_ERROR_MESSAGE);
         }
-        return SPLASH_SCREEN_TEMPLATE;
+        return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
     }
 }
