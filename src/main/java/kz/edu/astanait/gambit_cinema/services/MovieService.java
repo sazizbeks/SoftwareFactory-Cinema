@@ -70,4 +70,9 @@ public class MovieService implements IMovieService {
         if (!movieRepository.existsById(id))
             throw new BadRequestException("Movie with such ID does not exist");
     }
+
+    @Override
+    public List<Movie> searchMovies(String searchInput){
+        return movieRepository.findMoviesByNameContaining(searchInput);
+    }
 }

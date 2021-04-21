@@ -11,4 +11,6 @@ import java.util.Set;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> getDistinctByGenresIn(Set<Genre> genres);
+
+    List<Movie> findMoviesByNameContaining(String searchInput);
 }

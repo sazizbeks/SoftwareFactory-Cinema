@@ -5,6 +5,7 @@ import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 
+import java.util.List;
 import java.util.Set;
 
 public interface IMovieService {
@@ -13,4 +14,5 @@ public interface IMovieService {
     void delete(Movie movie) throws BadRequestException;
     Movie getById(Long id) throws BadRequestException;
     Movie getRandomMovie(Set<Genre> genres) throws NotFoundException;
+    List<Movie> searchMovies(String searchInput);
 }

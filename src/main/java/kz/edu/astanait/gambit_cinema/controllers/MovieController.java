@@ -3,6 +3,7 @@ package kz.edu.astanait.gambit_cinema.controllers;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.repositories.GenreRepository;
+import kz.edu.astanait.gambit_cinema.services.MovieService;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
 import kz.edu.astanait.gambit_cinema.tools.DatePickerConverter;
 import kz.edu.astanait.gambit_cinema.tools.StaticValues;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/movie")
@@ -114,5 +116,13 @@ public class MovieController {
             model.addAttribute("message", StaticValues.ID_ERROR_MESSAGE);
         }
         return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
+    }
+
+    @GetMapping("/search")
+    public String searchMovies(@RequestParam("search") String searchInput, Model model){
+        List<Movie> movies = movieService.searchMovies(searchInput);
+        model.addAttribute("movies",movies);
+        model.addAttribute("searchInput",searchInput);
+        return "searchResult";
     }
 }
