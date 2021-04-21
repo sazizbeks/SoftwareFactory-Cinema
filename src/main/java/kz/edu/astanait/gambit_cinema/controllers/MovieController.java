@@ -1,11 +1,12 @@
 package kz.edu.astanait.gambit_cinema.controllers;
 
+import javassist.NotFoundException;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
+import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.repositories.GenreRepository;
-import kz.edu.astanait.gambit_cinema.services.MovieService;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
-import kz.edu.astanait.gambit_cinema.tools.DatePickerConverter;
+import kz.edu.astanait.gambit_cinema.tools.DateConverter;
 import kz.edu.astanait.gambit_cinema.tools.StaticValues;
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/movie")
@@ -43,8 +45,8 @@ public class MovieController {
         }
     }
 
-    private void addGenresToModel(Model model){
-        model.addAttribute("genres",genreRepository.findAll());
+    private void addGenresToModel(Model model) {
+        model.addAttribute("genres", genreRepository.findAll());
     }
 
     @GetMapping("/add")
@@ -68,15 +70,28 @@ public class MovieController {
         return StaticValues.Templates.ADD_EDIT_MOVIE;
     }
 
+    @GetMapping("/random")
+    public String getRandomMovie(@RequestParam("genres") Set<Genre> specifiedGenres,
+                                 Model model) {
+        try {
+            Movie randomMovie = movieService.getRandomMovie(specifiedGenres);
+            model.addAttribute("movie", randomMovie);
+            return StaticValues.Templates.MOVIE_PAGE;
+        } catch (NotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
+        }
+    }
+
     @PostMapping("/add")
     public String add(@ModelAttribute("movie")
                       @Validated(ValidationMarkers.OnCreate.class) Movie movie, BindingResult bindingResult,
                       HttpServletRequest request,
                       Model model) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return StaticValues.Templates.ADD_EDIT_MOVIE;
         }
-        movie.setReleaseDate(DatePickerConverter.convertRequestParams(request));
+        movie.setReleaseDate(DateConverter.convert(request));
 
         try {
             movieService.add(movie);
@@ -89,12 +104,12 @@ public class MovieController {
 
     @PostMapping("/edit")
     public String edit(@ModelAttribute("movie")
-                       @Validated(ValidationMarkers.OnUpdate.class) Movie movie,BindingResult bindingResult,
+                       @Validated(ValidationMarkers.OnUpdate.class) Movie movie, BindingResult bindingResult,
                        Model model, HttpServletRequest request) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return StaticValues.Templates.ADD_EDIT_MOVIE;
         }
-        movie.setReleaseDate(DatePickerConverter.convertRequestParams(request));
+        movie.setReleaseDate(DateConverter.convert(request));
 
         try {
             movieService.edit(movie);
