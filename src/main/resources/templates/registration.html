@@ -4,11 +4,12 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
     <link th:replace="includes/bootstrapCSS">
-    <link rel="stylesheet" th:href="@{css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 <body class="d-flex justify-content-center bg-light">
 
-<form action="/registration" method="post" class="col-md-4 align-self-center translate-middle-y d-flex flex-column"
+<form action="/registration" method="post"
+      class="col-md-4 align-self-center translate-middle-y d-flex flex-column main-form"
       th:object="${userForm}">
     <h2 class="d-flex justify-content-center">Registration form</h2>
 

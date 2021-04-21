@@ -8,4 +8,6 @@ public class StaticValues {
         public static final String MOVIE_PAGE = "movie-page";
         public static final String ADD_EDIT_MOVIE = "admin/addEditMovie";
     }
+
+    public static final String jsonFolder = "src/main/java/kz/edu/astanait/gambit_cinema/parser/json/";
 }

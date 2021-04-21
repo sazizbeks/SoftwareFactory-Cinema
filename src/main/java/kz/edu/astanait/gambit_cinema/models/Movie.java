@@ -26,6 +26,7 @@ public class Movie {
     @NotNull(groups = {ValidationMarkers.APIOnCreate.class,
             ValidationMarkers.APIOnUpdate.class},
             message = "Release date cannot be empty")
+    @Column(columnDefinition = "date")
     private Calendar releaseDate;
 
     @NotBlank(groups = {ValidationMarkers.OnCreate.class,
@@ -46,11 +47,13 @@ public class Movie {
     @NotNull(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
             message = "Image URL cannot be empty")
+    @Column(length = 8192)
     private String imgUrl;
 
     @NotNull(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
             message = "Description cannot be empty")
+    @Column(length = 1024)
     private String description;
 
     @ManyToMany

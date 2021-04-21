@@ -45,6 +45,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @Column(columnDefinition = "date")
     private Date birthDate;
 
     public User() {
