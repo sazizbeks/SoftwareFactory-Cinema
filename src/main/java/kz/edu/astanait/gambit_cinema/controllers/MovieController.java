@@ -6,7 +6,7 @@ import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.repositories.GenreRepository;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
-import kz.edu.astanait.gambit_cinema.tools.DatePickerConverter;
+import kz.edu.astanait.gambit_cinema.tools.DateConverter;
 import kz.edu.astanait.gambit_cinema.tools.StaticValues;
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +90,7 @@ public class MovieController {
         if (bindingResult.hasErrors()) {
             return StaticValues.Templates.ADD_EDIT_MOVIE;
         }
-        movie.setReleaseDate(DatePickerConverter.convertRequestParams(request));
+        movie.setReleaseDate(DateConverter.convert(request));
 
         try {
             movieService.add(movie);
@@ -108,7 +108,7 @@ public class MovieController {
         if (bindingResult.hasErrors()) {
             return StaticValues.Templates.ADD_EDIT_MOVIE;
         }
-        movie.setReleaseDate(DatePickerConverter.convertRequestParams(request));
+        movie.setReleaseDate(DateConverter.convert(request));
 
         try {
             movieService.edit(movie);
