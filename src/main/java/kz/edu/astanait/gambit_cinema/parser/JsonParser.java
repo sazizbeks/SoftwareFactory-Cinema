@@ -3,7 +3,7 @@ package kz.edu.astanait.gambit_cinema.parser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import kz.edu.astanait.gambit_cinema.dto.ApiMovieDto;
+import kz.edu.astanait.gambit_cinema.dto.moviedb.ApiMovieDto;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.tools.DateConverter;

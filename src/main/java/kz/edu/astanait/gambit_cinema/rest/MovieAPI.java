@@ -1,11 +1,10 @@
 package kz.edu.astanait.gambit_cinema.rest;
 
 import javassist.NotFoundException;
-import kz.edu.astanait.gambit_cinema.dto.MovieDto;
+import kz.edu.astanait.gambit_cinema.dto.MoviePageDto;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
-import kz.edu.astanait.gambit_cinema.services.interfaces.IFeedbackService;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
 import kz.edu.astanait.gambit_cinema.tools.ExceptionManager;
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
@@ -22,18 +21,16 @@ import java.util.Set;
 @RequestMapping("/api/movie")
 public class MovieAPI {
     private final IMovieService movieService;
-    private final IFeedbackService feedbackService;
 
     @Autowired
-    public MovieAPI(IMovieService movieService, IFeedbackService feedbackService) {
+    public MovieAPI(IMovieService movieService) {
         this.movieService = movieService;
-        this.feedbackService = feedbackService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getMovieById(@PathVariable Long id) {
         try {
-            MovieDto movie = movieService.getById(id);
+            MoviePageDto movie = movieService.getById(id);
             return ResponseEntity
                     .ok(movie);
         } catch (BadRequestException e) {

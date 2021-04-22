@@ -1,4 +1,4 @@
-package kz.edu.astanait.gambit_cinema.dto;
+package kz.edu.astanait.gambit_cinema.dto.moviedb;
 
 public class ApiMovieDto {
     private String title;

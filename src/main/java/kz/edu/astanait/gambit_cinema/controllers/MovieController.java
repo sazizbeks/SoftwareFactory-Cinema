@@ -1,7 +1,7 @@
 package kz.edu.astanait.gambit_cinema.controllers;
 
 import javassist.NotFoundException;
-import kz.edu.astanait.gambit_cinema.dto.MovieDto;
+import kz.edu.astanait.gambit_cinema.dto.MoviePageDto;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
@@ -37,7 +37,7 @@ public class MovieController {
     @GetMapping("/{id}")
     public String getOne(@PathVariable Long id, Model model) {
         try {
-            MovieDto movie = movieService.getById(id);
+            MoviePageDto movie = movieService.getById(id);
             model.addAttribute("movie", movie);
             return StaticValues.Templates.MOVIE_PAGE;
         } catch (BadRequestException e) {
@@ -51,7 +51,7 @@ public class MovieController {
     }
 
     @GetMapping("/add")
-    public String addMoviePage(Model model) {
+    public String showAddMoviePage(Model model) {
         model.addAttribute("movie", new Movie());
         model.addAttribute("type", "add");
         addGenresToModel(model);
@@ -59,7 +59,7 @@ public class MovieController {
     }
 
     @GetMapping("/edit")
-    public String editMoviePage(@RequestParam Long id, Model model) {
+    public String showEditMoviePage(@RequestParam Long id, Model model) {
         try {
             model.addAttribute("movie", movieService.getById(id));
             model.addAttribute("type", "edit");
@@ -72,8 +72,8 @@ public class MovieController {
     }
 
     @GetMapping("/random")
-    public String getRandomMovie(@RequestParam("genres") Set<Genre> specifiedGenres,
-                                 Model model) {
+    public String showRandomMovie(@RequestParam("genres") Set<Genre> specifiedGenres,
+                                  Model model) {
         try {
             Movie randomMovie = movieService.getRandomMovie(specifiedGenres);
             model.addAttribute("movie", randomMovie);
@@ -135,10 +135,10 @@ public class MovieController {
     }
 
     @GetMapping("/search")
-    public String searchMovies(@RequestParam("search") String searchInput, Model model){
+    public String searchMovies(@RequestParam("search") String searchInput, Model model) {
         List<Movie> movies = movieService.searchMovies(searchInput);
-        model.addAttribute("movies",movies);
-        model.addAttribute("searchInput",searchInput);
+        model.addAttribute("movies", movies);
+        model.addAttribute("searchInput", searchInput);
         return "searchResult";
     }
 }

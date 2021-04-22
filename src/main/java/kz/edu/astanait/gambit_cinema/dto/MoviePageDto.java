@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class MovieDto {
+public class MoviePageDto {
     private Movie movie;
     private List<FeedbackDto> feedbacks;
 }
