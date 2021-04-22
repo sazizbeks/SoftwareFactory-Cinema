@@ -1,6 +1,7 @@
 package kz.edu.astanait.gambit_cinema.models;
 
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "movies")
+@Builder
+@Setter
+@Getter
+@ToString
+@AllArgsConstructor
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,93 +65,8 @@ public class Movie {
     @ManyToMany
     private Set<Genre> genres;
 
+
+
     public Movie() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Calendar getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Calendar releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public String getActors() {
-        return actors;
-    }
-
-    public void setActors(String actors) {
-        this.actors = actors;
-    }
-
-    public Byte getAgeRating() {
-        return ageRating;
-    }
-
-    public void setAgeRating(Byte ageRating) {
-        this.ageRating = ageRating;
-    }
-
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", releaseDate=" + releaseDate +
-                ", director='" + director + '\'' +
-                ", actors='" + actors + '\'' +
-                ", ageRating=" + ageRating +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", description='" + description + '\'' +
-                ", genres=" + genres +
-                '}';
     }
 }

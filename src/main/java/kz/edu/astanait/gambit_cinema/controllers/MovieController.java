@@ -1,6 +1,7 @@
 package kz.edu.astanait.gambit_cinema.controllers;
 
 import javassist.NotFoundException;
+import kz.edu.astanait.gambit_cinema.dto.MovieDto;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
@@ -36,7 +37,7 @@ public class MovieController {
     @GetMapping("/{id}")
     public String getOne(@PathVariable Long id, Model model) {
         try {
-            Movie movie = movieService.getById(id);
+            MovieDto movie = movieService.getById(id);
             model.addAttribute("movie", movie);
             return StaticValues.Templates.MOVIE_PAGE;
         } catch (BadRequestException e) {

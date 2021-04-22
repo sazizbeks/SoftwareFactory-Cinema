@@ -1,10 +1,12 @@
 package kz.edu.astanait.gambit_cinema.services;
 
 import javassist.NotFoundException;
+import kz.edu.astanait.gambit_cinema.dto.MovieDto;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.repositories.MovieRepository;
+import kz.edu.astanait.gambit_cinema.services.interfaces.IFeedbackService;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +20,25 @@ import java.util.Set;
 public class MovieService implements IMovieService {
 
     private final MovieRepository movieRepository;
+    private final IFeedbackService feedbackService;
     private final Random random;
 
     @Autowired
-    public MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository, IFeedbackService feedbackService) {
         this.movieRepository = movieRepository;
+        this.feedbackService = feedbackService;
         this.random = new Random();
     }
 
     @Override
-    public Movie getById(Long id) throws BadRequestException {
+    public MovieDto getById(Long id) throws BadRequestException {
         Optional<Movie> optionalMovie = movieRepository.findById(id);
         if (optionalMovie.isPresent()) {
-            return optionalMovie.get();
+            Movie movie = optionalMovie.get();
+            return MovieDto.builder()
+                    .movie(movie)
+                    .feedbacks(feedbackService.getFeedbackDtos(movie))
+                    .build();
         }
         throw new BadRequestException("No such ID");
     }
