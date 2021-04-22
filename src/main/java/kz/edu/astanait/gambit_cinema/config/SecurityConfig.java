@@ -1,6 +1,7 @@
 package kz.edu.astanait.gambit_cinema.config;
 
 import kz.edu.astanait.gambit_cinema.models.User;
+import kz.edu.astanait.gambit_cinema.repositories.GenreRepository;
 import kz.edu.astanait.gambit_cinema.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,11 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
+    private final GenreRepository genreRepository;
 
     @Autowired
-    public SecurityConfig(@Qualifier("myUserDetailsService") UserDetailsService userDetailsService, UserRepository userRepository) {
+    public SecurityConfig(@Qualifier("myUserDetailsService") UserDetailsService userDetailsService,
+                          UserRepository userRepository,GenreRepository genreRepository) {
         this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
+        this.genreRepository = genreRepository;
     }
 
     @Override
@@ -93,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             User user = userRepository.findByUsername(username);
 
             HttpSession session = request.getSession();
+            session.setAttribute("genreList", genreRepository.findAll());
             session.setMaxInactiveInterval(60 * 5); //5 minutes
             session.setAttribute("user", user);
 
