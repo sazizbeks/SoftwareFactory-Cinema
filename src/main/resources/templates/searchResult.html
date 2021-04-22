@@ -13,14 +13,14 @@
 
 <div th:replace="includes/header"></div>
 
-<div class="main container">
+<div class="main container mt-5 mb-5">
 
-    <div class="row row-cols-1 row-cols-md-3 g-4 mt-5 mb-5">
-        <div class="col" th:each="movie : ${movies}">
-            <div class="card cardImgBox">
-                <img th:src="${movie.imgUrl}" class="card-img-top cardImg" alt="...">
-                <div class="">
-                    <h5 class="card-title" th:text="${movie.getName()}"></h5>
+    <div class="row row-cols-1 row-cols-md-3 g-4 ">
+        <div class="col cardCol" th:each="movie : ${movies}">
+            <div class="card bg-dark">
+                <img th:src="${movie.imgUrl}" class="card-img-top cardImg">
+                <div class="card-body">
+                    <h5 class="card-title text-light" th:text="${movie.getName()}">Card title</h5>
                 </div>
             </div>
         </div>

@@ -70,11 +70,12 @@
     width: 50%;
 }
 
-.cardImgBox {
-    width: 200px;
-}
-
 .cardImg{
     max-width: 100%;
-    max-height: 100%;
+    max-height: 30vw;
+    object-fit: cover;
 }
+
+
+
+
