@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/login").not().authenticated()
                 .antMatchers("/api/movie/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/update-favorite").permitAll()
 
                 //Web app security
                 .antMatchers("/index", "/").permitAll()

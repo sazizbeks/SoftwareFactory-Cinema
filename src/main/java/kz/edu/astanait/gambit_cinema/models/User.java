@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,8 +54,13 @@ public class User {
     @Column(columnDefinition = "date")
     private Date birthDate;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Movie> favoriteMovies;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "favorite_movies",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private Set<Movie> favoriteMovies;
 
     public User() {
     }
