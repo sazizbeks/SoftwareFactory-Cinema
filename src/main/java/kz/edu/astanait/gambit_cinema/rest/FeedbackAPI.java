@@ -1,0 +1,25 @@
+package kz.edu.astanait.gambit_cinema.rest;
+
+import kz.edu.astanait.gambit_cinema.models.Feedback;
+import kz.edu.astanait.gambit_cinema.services.interfaces.IFeedbackService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/feedback")
+public class FeedbackAPI {
+    private final IFeedbackService feedbackService;
+
+    @Autowired
+    public FeedbackAPI(IFeedbackService feedbackService) {
+        this.feedbackService = feedbackService;
+    }
+
+    @PostMapping("/add")
+    public void addFeedback(@RequestBody Feedback feedback) {
+        feedbackService.add(feedback);
+    }
+}
