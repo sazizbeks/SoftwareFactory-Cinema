@@ -37,7 +37,7 @@ public class MovieController {
     @GetMapping("/{id}")
     public String getOne(@PathVariable Long id, Model model) {
         try {
-            MoviePageDto movie = movieService.getById(id);
+            MoviePageDto movie = movieService.getMoviePageDtoById(id);
             model.addAttribute(StaticValues.MOVIE_DTO, movie);
             return StaticValues.Templates.MOVIE_PAGE;
         } catch (BadRequestException e) {
@@ -59,9 +59,9 @@ public class MovieController {
     }
 
     @GetMapping("/edit")
-    public String showEditMoviePage(@RequestParam Long id, Model model) {
+    public String editMoviePage(@RequestParam Long id, Model model) {
         try {
-            model.addAttribute(StaticValues.MOVIE_DTO, movieService.getById(id));
+            model.addAttribute("movie", movieService.getMovieById(id));
             model.addAttribute("type", "edit");
             addGenresToModel(model);
         } catch (BadRequestException e) {

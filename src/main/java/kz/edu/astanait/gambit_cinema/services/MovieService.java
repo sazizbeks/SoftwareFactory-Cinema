@@ -32,7 +32,7 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public MoviePageDto getById(Long id) throws BadRequestException {
+    public MoviePageDto getMoviePageDtoById(Long id) throws BadRequestException {
         Optional<Movie> optionalMovie = movieRepository.findById(id);
         if (optionalMovie.isPresent()) {
             Movie movie = optionalMovie.get();
@@ -40,6 +40,15 @@ public class MovieService implements IMovieService {
                     .movie(movie)
                     .feedbacks(feedbackService.getFeedbackDtos(movie))
                     .build();
+        }
+        throw new BadRequestException("No such ID");
+    }
+
+    @Override
+    public Movie getMovieById(Long id) throws BadRequestException {
+        Optional<Movie> optionalMovie = movieRepository.findById(id);
+        if (optionalMovie.isPresent()) {
+            return optionalMovie.get();
         }
         throw new BadRequestException("No such ID");
     }

@@ -30,7 +30,7 @@ public class MovieAPI {
     @GetMapping("/{id}")
     public ResponseEntity<?> getMovieById(@PathVariable Long id) {
         try {
-            MoviePageDto movie = movieService.getById(id);
+            MoviePageDto movie = movieService.getMoviePageDtoById(id);
             return ResponseEntity
                     .ok(movie);
         } catch (BadRequestException e) {

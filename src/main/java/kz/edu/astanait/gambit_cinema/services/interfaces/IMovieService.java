@@ -13,7 +13,8 @@ public interface IMovieService {
     void add(Movie movie) throws BadRequestException;
     void edit(Movie movie) throws BadRequestException;
     void delete(Movie movie) throws BadRequestException;
-    MoviePageDto getById(Long id) throws BadRequestException;
+    MoviePageDto getMoviePageDtoById(Long id) throws BadRequestException;
+    Movie getMovieById(Long id) throws BadRequestException;
     Movie getRandomMovie(Set<Genre> genres) throws NotFoundException;
     List<Movie> searchMovies(String searchInput);
     boolean addOrDeleteMovieInFavoriteList(Long userId, Long movieId);
