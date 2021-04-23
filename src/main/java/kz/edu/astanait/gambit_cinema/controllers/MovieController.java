@@ -38,7 +38,7 @@ public class MovieController {
     public String getOne(@PathVariable Long id, Model model) {
         try {
             MoviePageDto movie = movieService.getById(id);
-            model.addAttribute("movie", movie);
+            model.addAttribute(StaticValues.MOVIE_DTO, movie);
             return StaticValues.Templates.MOVIE_PAGE;
         } catch (BadRequestException e) {
             model.addAttribute("message", e.getMessage());
@@ -61,7 +61,7 @@ public class MovieController {
     @GetMapping("/edit")
     public String showEditMoviePage(@RequestParam Long id, Model model) {
         try {
-            model.addAttribute("movie", movieService.getById(id));
+            model.addAttribute(StaticValues.MOVIE_DTO, movieService.getById(id));
             model.addAttribute("type", "edit");
             addGenresToModel(model);
         } catch (BadRequestException e) {
@@ -76,8 +76,7 @@ public class MovieController {
                                   Model model) {
         try {
             Movie randomMovie = movieService.getRandomMovie(specifiedGenres);
-            model.addAttribute("movie", randomMovie);
-            return StaticValues.Templates.MOVIE_PAGE;
+            return "redirect:/movie/"+randomMovie.getId();
         } catch (NotFoundException e) {
             model.addAttribute("message", e.getMessage());
             return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
