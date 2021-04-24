@@ -151,4 +151,6 @@ public class MovieController {
         model.addAttribute("favList",movieService.getFavList(currentUser.getId()));
         return "favList";
     }
+
+
 }

@@ -24,6 +24,9 @@
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" aria-current="page" href="/movie/favourite_list">Favorite list</a>
+                        </li>
                         <li class="nav-item" th:if="${session.user!=null}">
                             <a id="randomLink" class="nav-link text-light" href="#" data-bs-toggle="modal"
                                data-bs-target="#randomModal" onclick="displayBlock()">

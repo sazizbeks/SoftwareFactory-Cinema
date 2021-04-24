@@ -110,4 +110,6 @@ public class MovieService implements IMovieService {
     public Set<Movie> getFavList(Long id) {
         return movieRepository.getFavList(id);
     }
+
+
 }

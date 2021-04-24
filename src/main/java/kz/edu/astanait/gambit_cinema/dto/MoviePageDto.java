@@ -14,4 +14,5 @@ import java.util.List;
 public class MoviePageDto {
     private Movie movie;
     private List<FeedbackDto> feedbacks;
+    private boolean isFavorite;
 }
