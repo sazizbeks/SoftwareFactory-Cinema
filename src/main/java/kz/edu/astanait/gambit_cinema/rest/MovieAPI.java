@@ -26,17 +26,17 @@ public class MovieAPI {
     public MovieAPI(IMovieService movieService) {
         this.movieService = movieService;
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getMovieById(@PathVariable Long id) {
-        try {
-            MoviePageDto movie = movieService.getMoviePageDtoById(id);
-            return ResponseEntity
-                    .ok(movie);
-        } catch (BadRequestException e) {
-            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
-        }
-    }
+//todo
+//    @GetMapping("/{id}")
+//    public ResponseEntity<?> getMovieById(@PathVariable Long userId, ) {
+//        try {
+//            MoviePageDto movie = movieService.getMoviePageDtoById(id);
+//            return ResponseEntity
+//                    .ok(movie);
+//        } catch (BadRequestException e) {
+//            return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
+//        }
+//    }
 
     @GetMapping("/random")
     public ResponseEntity<?> count(@RequestBody Set<Genre> genres) {

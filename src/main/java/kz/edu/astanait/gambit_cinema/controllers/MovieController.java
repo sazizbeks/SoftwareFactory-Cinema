@@ -37,10 +37,11 @@ public class MovieController {
         this.genreRepository = genreRepository;
     }
 
-    @GetMapping("/{id}")
-    public String getOne(@PathVariable Long id, Model model) {
+    @GetMapping("/{movieId}")
+    public String getOne(@PathVariable Long movieId, Model model, HttpServletRequest request) {
         try {
-            MoviePageDto movie = movieService.getMoviePageDtoById(id);
+            User user = (User) request.getSession().getAttribute("user");
+            MoviePageDto movie = movieService.getMoviePageDtoById(movieId, user.getId());
             model.addAttribute(StaticValues.MOVIE_DTO, movie);
             return StaticValues.Templates.MOVIE_PAGE;
         } catch (BadRequestException e) {

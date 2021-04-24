@@ -32,13 +32,14 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public MoviePageDto getMoviePageDtoById(Long id) throws BadRequestException {
-        Optional<Movie> optionalMovie = movieRepository.findById(id);
+    public MoviePageDto getMoviePageDtoById(Long movieId, Long userId) throws BadRequestException {
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId);
         if (optionalMovie.isPresent()) {
             Movie movie = optionalMovie.get();
             return MoviePageDto.builder()
                     .movie(movie)
                     .feedbacks(feedbackService.getFeedbackDtos(movie))
+                    .isFavorite(movieRepository.favoriteMovieExists(userId, movieId))
                     .build();
         }
         throw new BadRequestException("No such ID");

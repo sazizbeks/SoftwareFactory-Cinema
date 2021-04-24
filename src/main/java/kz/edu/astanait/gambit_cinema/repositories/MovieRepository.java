@@ -21,7 +21,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     boolean favoriteMovieExists(Long userId, Long movieId);
 
     @Modifying
-    @Query(value = "insert into favorite_movies values (:userId,:movieId)",
+    @Query(value = "insert into favorite_movies(user_id, movie_id) values (:userId,:movieId)",
             nativeQuery = true)
     void addMovieToFavoriteList(Long userId, Long movieId);
 
