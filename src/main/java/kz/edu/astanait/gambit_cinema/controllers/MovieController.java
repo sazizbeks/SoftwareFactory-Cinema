@@ -5,6 +5,7 @@ import kz.edu.astanait.gambit_cinema.dto.MoviePageDto;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
+import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.repositories.GenreRepository;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
 import kz.edu.astanait.gambit_cinema.tools.DateConverter;
@@ -18,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -139,5 +142,13 @@ public class MovieController {
         model.addAttribute("movies", movies);
         model.addAttribute("searchInput", searchInput);
         return "searchResult";
+    }
+
+    @GetMapping("/favourite_list")
+    public String getFavList(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("user");
+        model.addAttribute("favList",movieService.getFavList(currentUser.getId()));
+        return "favList";
     }
 }

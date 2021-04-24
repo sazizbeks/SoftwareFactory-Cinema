@@ -29,4 +29,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query(value = "delete from favorite_movies where user_id=:userId and movie_id=:movieId",
             nativeQuery = true)
     void deleteMovieFromFavoriteList(Long userId, Long movieId);
+
+    @Query(value = "select m.* from movies m join favorite_movies fm on m.id = fm.movie_id where fm.user_id =:id", nativeQuery = true)
+    Set<Movie> getFavList(Long id);
 }

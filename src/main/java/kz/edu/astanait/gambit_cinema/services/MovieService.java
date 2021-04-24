@@ -105,4 +105,9 @@ public class MovieService implements IMovieService {
         }
         return !exists;
     }
+
+    @Override
+    public Set<Movie> getFavList(Long id) {
+        return movieRepository.getFavList(id);
+    }
 }

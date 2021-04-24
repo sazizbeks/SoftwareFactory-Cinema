@@ -18,4 +18,5 @@ public interface IMovieService {
     Movie getRandomMovie(Set<Genre> genres) throws NotFoundException;
     List<Movie> searchMovies(String searchInput);
     boolean addOrDeleteMovieInFavoriteList(Long userId, Long movieId);
+    Set<Movie> getFavList(Long id);
 }
