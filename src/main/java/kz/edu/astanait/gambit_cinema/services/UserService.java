@@ -1,7 +1,6 @@
 package kz.edu.astanait.gambit_cinema.services;
 
 import kz.edu.astanait.gambit_cinema.exceptions.*;
-import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.repositories.RoleRepository;
 import kz.edu.astanait.gambit_cinema.repositories.UserRepository;
@@ -10,8 +9,6 @@ import kz.edu.astanait.gambit_cinema.validation.BirthDateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 public class UserService implements IUserService {
@@ -57,8 +54,4 @@ public class UserService implements IUserService {
             throw new BadRequestException("No such user with this username");
         }
     }
-
-
-
-
 }
