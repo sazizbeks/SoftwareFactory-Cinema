@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/movie/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/feedback/add").permitAll()
+                .antMatchers(HttpMethod.POST, "/feedback/add").authenticated()
                 .antMatchers(HttpMethod.POST,"/update-favorite").permitAll()
 
                 //Web app security
