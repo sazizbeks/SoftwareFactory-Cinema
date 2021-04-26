@@ -2,6 +2,7 @@ package kz.edu.astanait.gambit_cinema.models;
 
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -53,6 +54,9 @@ public class Movie {
     @NotNull(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
             message = "Image URL cannot be empty")
+    @URL(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "This must be URL")
     @Column(length = 8192)
     private String imgUrl;
 
@@ -68,6 +72,9 @@ public class Movie {
     @NotNull(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
             message = "Trailer URL cannot be empty")
+    @URL(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "This must be URL")
     private String trailerUrl;
 
     public Movie() {

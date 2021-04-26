@@ -100,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             HttpSession session = request.getSession();
             session.setAttribute("genreList", genreRepository.findAll());
-            session.setMaxInactiveInterval(60 * 5); //5 minutes
+            session.setMaxInactiveInterval(60 * 60); //1 hour
             session.setAttribute("user", user);
 
             response.sendRedirect("/");
