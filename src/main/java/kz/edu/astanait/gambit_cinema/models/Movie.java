@@ -65,7 +65,10 @@ public class Movie {
     @ManyToMany
     private Set<Genre> genres;
 
-
+    @NotNull(groups = {ValidationMarkers.OnCreate.class,
+            ValidationMarkers.OnUpdate.class},
+            message = "Trailer URL cannot be empty")
+    private String trailerUrl;
 
     public Movie() {
     }

@@ -12,6 +12,10 @@
 
 <div th:replace="includes/header"></div>
 
+<span th:if="${type=='edit'}" style="display: none;" id="editDay" th:text="${movie.releaseDate.get(movie.releaseDate.DAY_OF_MONTH)}"></span>
+<span th:if="${type=='edit'}" style="display: none;" id="editMonth" th:text="${movie.releaseDate.get(movie.releaseDate.MONTH)}"></span>
+<span th:if="${type=='edit'}" style="display: none;" id="editYear" th:text="${movie.releaseDate.get(movie.releaseDate.YEAR)}"></span>
+
 <form th:action="'/movie/'+${type=='add'?'add':'edit'}" method="post" th:object="${movie}"
       class="container main mt-5 mb-5 bg-light main-form">
     <h2 class="d-flex justify-content-center" th:text="${type=='add'?'Add':'Edit'}+' form'"></h2>

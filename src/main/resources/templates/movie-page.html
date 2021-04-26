@@ -44,7 +44,7 @@
                             <dl class="row m-0">
                                 <dt class="mr-4 text-light">Release date</dt>
                                 <dd class="text-light" th:text="${movieDto.movie.releaseDate.get(movieDto.movie.releaseDate.DAY_OF_MONTH)
-                            +'/'+movieDto.movie.releaseDate.get(movieDto.movie.releaseDate.MONTH+1)
+                            +'/'+(movieDto.movie.releaseDate.get(movieDto.movie.releaseDate.MONTH)+1)
                             +'/'+movieDto.movie.releaseDate.get(movieDto.movie.releaseDate.YEAR)}"></dd>
                             </dl>
                         </li>
@@ -72,6 +72,18 @@
                             <dl class="row m-0">
                                 <dt class="mr-4 text-light">Actors</dt>
                                 <dd class="text-light" th:text="${movieDto.movie.actors}"></dd>
+                            </dl>
+                        </li>
+                        <li th:if="${session.user.role.name=='ADMIN'}" class="list-group-item py-0 bg-dark">
+                            <dl class="row m-0">
+                                <dt class="mr-4 text-light">Admin functions</dt>
+                                <dd class="text-light">
+                                    <a th:href="${'/movie/edit?id='+movieDto.movie.id}">
+                                        <button class="btn btn-warning">
+                                            Edit
+                                        </button>
+                                    </a>
+                                </dd>
                             </dl>
                         </li>
                     </ul>
