@@ -50,5 +50,5 @@ for (let i = 0; i < months.length; i++) {
 
 //init day input
 for (let i = 1; i <= getDaysInMonth(monthInput.val(),yearInput.val()); i++) {
-   dayInput.append('<option value="' + i + (editDay != null && editDay === i ? ' selected' : '') + '">' + i + '</option>');
+   dayInput.append('<option value="' + i + '"' + (editDay != null && editDay === i ? ' selected' : '') + '">' + i + '</option>');
 }

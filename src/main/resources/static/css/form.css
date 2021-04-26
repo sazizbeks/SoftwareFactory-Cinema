@@ -1,5 +1,7 @@
 .main-form {
     margin-top: 30rem;
+    padding: 20px;
+    border-radius: 25px;
 }
 .error{
     color: red;
