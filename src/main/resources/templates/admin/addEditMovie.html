@@ -68,10 +68,10 @@
     </div>
 
     <div class="mb-3">
-        <label for="trailerUrlInput" class="form-label">Trailer URL</label>
-        <input type="text" class="form-control" id="trailerUrlInput" aria-describedby="trailerUrlInputDesc" name="trailerUrl"
-               th:field="*{trailerUrl}" required autocomplete="off">
-        <div class="error" th:if="${#fields.hasErrors('trailerUrl')}" th:errors="*{trailerUrl}"></div>
+        <label for="trailerKeyInput" class="form-label">Trailer URL</label>
+        <input type="text" class="form-control" id="trailerKeyInput" aria-describedby="trailerKeyInputDesc" name="trailerKey"
+               th:field="*{youtubeTrailerKey}" required autocomplete="off">
+        <div class="error" th:if="${#fields.hasErrors('youtubeTrailerKey')}" th:errors="*{youtubeTrailerKey}"></div>
     </div>
 
     <p class="text-light">Release date</p>

@@ -71,11 +71,9 @@ public class Movie {
 
     @NotNull(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
-            message = "Trailer URL cannot be empty")
-    @URL(groups = {ValidationMarkers.OnCreate.class,
-            ValidationMarkers.OnUpdate.class},
-            message = "This must be URL")
-    private String trailerUrl;
+            message = "Trailer key cannot be empty")
+    @Column(length = 64)
+    private String youtubeTrailerKey;
 
     public Movie() {
     }
