@@ -2,6 +2,7 @@ package kz.edu.astanait.gambit_cinema.services;
 
 import javassist.NotFoundException;
 import kz.edu.astanait.gambit_cinema.dto.MoviePageDto;
+import kz.edu.astanait.gambit_cinema.dto.favoritelist.FavoriteMovieIdsDto;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
@@ -12,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 @Service
 public class MovieService implements IMovieService {
@@ -88,7 +92,7 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public List<Movie> searchMovies(String searchInput){
+    public List<Movie> searchMovies(String searchInput) {
         return movieRepository.findMoviesByNameContaining(searchInput);
     }
 
@@ -96,12 +100,21 @@ public class MovieService implements IMovieService {
     @Override
     public boolean addOrDeleteMovieInFavoriteList(Long userId, Long movieId) {
         boolean exists = movieRepository.favoriteMovieExists(userId, movieId);
-        if(exists){
+        if (exists) {
             movieRepository.deleteMovieFromFavoriteList(userId, movieId);
-        }else{
+        } else {
             movieRepository.addMovieToFavoriteList(userId, movieId);
         }
         return !exists;
+    }
+
+    @Override
+    public void saveFavoriteMoviesToDb(List<FavoriteMovieIdsDto> dtoList) {
+        dtoList.forEach(dto -> {
+            if (!movieRepository.favoriteMovieExists(dto.getUserId(), dto.getMovieId())) {
+                movieRepository.addMovieToFavoriteList(dto.getUserId(), dto.getMovieId());
+            }
+        });
     }
 
     @Override

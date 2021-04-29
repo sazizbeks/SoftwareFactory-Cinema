@@ -2,6 +2,8 @@ package kz.edu.astanait.gambit_cinema.rest;
 
 import javassist.NotFoundException;
 import kz.edu.astanait.gambit_cinema.dto.MoviePageDto;
+import kz.edu.astanait.gambit_cinema.dto.favoritelist.FavoriteMovieIdsDto;
+import kz.edu.astanait.gambit_cinema.dto.favoritelist.UpdateFavoriteResponse;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
@@ -15,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -86,5 +90,18 @@ public class MovieAPI {
         } catch (BadRequestException e) {
             return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
         }
+    }
+
+    @Transactional
+    @PostMapping("/save-favorite")
+    public ResponseEntity<?> saveFavoriteListToDb(@RequestBody List<FavoriteMovieIdsDto> dtoList) {
+        movieService.saveFavoriteMoviesToDb(dtoList);
+
+        return ResponseEntity.ok(
+                UpdateFavoriteResponse.builder().
+                        resultMessage("Successfully added to favorite list")
+                        .isAdded(true)
+                        .build()
+        );
     }
 }

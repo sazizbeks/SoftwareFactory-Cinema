@@ -1,10 +1,7 @@
 package kz.edu.astanait.gambit_cinema.services.interfaces;
 
 import kz.edu.astanait.gambit_cinema.exceptions.*;
-import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.models.User;
-
-import java.util.Set;
 
 public interface IUserService {
     /**
