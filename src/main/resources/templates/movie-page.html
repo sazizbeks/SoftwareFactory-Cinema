@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${movieDto.movie.name}"></title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/background.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
@@ -22,7 +23,7 @@
         <div class="row no-gutters">
 
             <div class="col-12 col-md-2 imgMovieBlock">
-                <img th:src="${movieDto.movie.imgUrl}"  th:alt="${movieDto.movie.name}" class="card-img imgMovie">
+                <img th:src="${movieDto.movie.imgUrl}" th:alt="${movieDto.movie.name}" class="card-img imgMovie">
             </div>
 
             <input id="movieId" type="hidden" th:value="${movieDto.getMovie().getId()}">
@@ -33,7 +34,8 @@
                     <div class="col-md-11" th:text="${movieDto.movie.name}"></div>
                     <div class="col-md-1">
                         <button id="btnFav" class="btn btn-fav">
-                            <img style="color: white" id="favLogo" th:src="${movieDto.favorite ?'/img/fav-pressed.png': '/img/fav.png'}" width="40">
+                            <img style="color: white" id="favLogo"
+                                 th:src="${movieDto.favorite ?'/img/fav-pressed.png': '/img/fav.png'}" width="40">
                         </button>
                     </div>
                 </div>
@@ -52,7 +54,8 @@
                             <dl class="row m-0">
                                 <dt class="mr-4 text-light">Genres</dt>
                                 <dd>
-                                    <span class="text-light" th:each="genre, iStat : ${movieDto.movie.genres}" th:text="${genre.name+ (!iStat.last?', ':'')}"></span>
+                                    <span class="text-light" th:each="genre, iStat : ${movieDto.movie.genres}"
+                                          th:text="${genre.name+ (!iStat.last?', ':'')}"></span>
                                 </dd>
                             </dl>
                         </li>
@@ -93,7 +96,13 @@
         </div>
     </div>
 
-    <div class="media-player mt-4"></div>
+    <div class="media-player mt-4">
+        <iframe width="100%" height="550" th:src="'https://www.youtube.com/embed/'+${movieDto.movie.youtubeTrailerKey}"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+    </div>
 
     <div class="feedback-box mt-4 bg-dark">
         <div class="row">
@@ -130,7 +139,9 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
 <script th:src="@{/js/randomBox.js}"></script>
 <script th:src="@{/js/updateFavList.js}"></script>
 </body>

@@ -68,9 +68,10 @@
     </div>
 
     <div class="mb-3">
-        <label for="trailerKeyInput" class="form-label">Trailer URL</label>
+        <label for="trailerKeyInput" class="form-label text-light">Trailer URL</label>
         <input type="text" class="form-control" id="trailerKeyInput" aria-describedby="trailerKeyInputDesc" name="trailerKey"
                th:field="*{youtubeTrailerKey}" required autocomplete="off">
+        <div class="form-text">You should input only unique key of trailer, like 6ZfuNTqbHE8</div>
         <div class="error" th:if="${#fields.hasErrors('youtubeTrailerKey')}" th:errors="*{youtubeTrailerKey}"></div>
     </div>
 

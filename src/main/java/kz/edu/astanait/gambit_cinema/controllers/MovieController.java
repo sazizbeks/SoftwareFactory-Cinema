@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -93,6 +92,8 @@ public class MovieController {
                       HttpServletRequest request,
                       Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("type", "add");
+            addGenresToModel(model);
             return StaticValues.Templates.ADD_EDIT_MOVIE;
         }
         movie.setReleaseDate(DateConverter.convert(request));
@@ -111,6 +112,8 @@ public class MovieController {
                        @Validated(ValidationMarkers.OnUpdate.class) Movie movie, BindingResult bindingResult,
                        Model model, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("type", "edit");
+            addGenresToModel(model);
             return StaticValues.Templates.ADD_EDIT_MOVIE;
         }
         movie.setReleaseDate(DateConverter.convert(request));
