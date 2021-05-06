@@ -17,37 +17,40 @@ public class SubscriptionService implements ISubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
 
     @Override
-    public void buy(User user, int month) {
-        subscriptionRepository.save(Subscription.builder()
-                .user(user)
+    public Subscription buy(Long userId, int month) {
+        Subscription subscription = Subscription.builder()
+                .user(User.builder().id(userId).build())
                 .expirationDate(getNewExpirationDate(month))
-                .build());
+                .build();
+        subscriptionRepository.save(subscription);
+        return subscription;
     }
 
     @Override
-    public Calendar checkExpirationDate(User user) throws NotFoundException {
-        return getSubscription(user).getExpirationDate();
+    public Calendar checkExpirationDate(Long userId) throws NotFoundException {
+        return getSubscription(userId).getExpirationDate();
     }
 
     @Transactional
     @Override
-    public void cancel(User user) throws NotFoundException {
-        Subscription subscription = getSubscription(user);
+    public void cancel(Long userId) throws NotFoundException {
+        Subscription subscription = getSubscription(userId);
         subscriptionRepository.delete(subscription);
     }
 
     @Override
-    public Subscription getSubscription(User user) throws NotFoundException {
-        Subscription subscription = subscriptionRepository.findByUser(user);
+    public Subscription getSubscription(Long userId) throws NotFoundException {
+        Subscription subscription = subscriptionRepository.findSubscriptionByUser(User.builder().id(userId).build());
         if (subscription == null) throw new NotFoundException("You have not a subscription.");
         return subscription;
     }
 
     @Override
-    public void updateSubscriptionPlan(User user, int month) throws NotFoundException {
-        Subscription subscription = getSubscription(user);
+    public Subscription updateSubscriptionPlan(Long userId, int month) throws NotFoundException {
+        Subscription subscription = getSubscription(userId);
         subscription.getExpirationDate().add(Calendar.MONTH, month);
         subscriptionRepository.save(subscription);
+        return subscription;
     }
 
     private Calendar getNewExpirationDate(int month) {

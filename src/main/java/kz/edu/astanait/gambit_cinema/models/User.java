@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
@@ -61,9 +62,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
     private Set<Movie> favoriteMovies;
-
-    public User() {
-    }
 
     public Set<GrantedAuthority> getGrantedAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = role.getAuthorities().stream()
