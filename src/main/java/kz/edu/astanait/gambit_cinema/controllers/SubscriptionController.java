@@ -8,9 +8,7 @@ import kz.edu.astanait.gambit_cinema.tools.StaticValues;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -22,6 +20,10 @@ import java.util.Calendar;
 public class SubscriptionController {
     private final ISubscriptionService subscriptionService;
 
+    @GetMapping("")
+    public String showSubscription(){
+        return "subscription";
+    }
 
     //This method may be reformatted
     @GetMapping("/check")
@@ -42,7 +44,7 @@ public class SubscriptionController {
     }
 
     @PostMapping("/subscribe")
-    public String buySubscription(Integer month, HttpSession session, Model model) {
+    public String buySubscription(@RequestParam("month") Integer month, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         subscriptionService.buy(user.getId(), month);
         model.addAttribute("message", "You have successfully subscribed for " + month + " months");

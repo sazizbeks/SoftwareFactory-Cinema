@@ -2,11 +2,10 @@ $( document ).ready(function() {
 
     $('#btnFav').click(function (){
 
-        var movieId = $('#movieId').val();
-        var userId = $('#userId').val();
-        var data0 = {userId: userId, movieId: movieId};
+        let movieId = $('#movieId').val();
+        let userId = $('#userId').val();
+        let data0 = {userId: userId, movieId: movieId};
 
-        console.log(movieId,userId);
         $.ajax({
             type: "POST",
             contentType: "application/json",
