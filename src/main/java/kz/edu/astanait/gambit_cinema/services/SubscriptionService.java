@@ -27,8 +27,8 @@ public class SubscriptionService implements ISubscriptionService {
     }
 
     @Override
-    public Calendar checkExpirationDate(Long userId) throws NotFoundException {
-        return getSubscription(userId).getExpirationDate();
+    public Long checkExpirationDate(Long userId) throws NotFoundException {
+        return getSubscription(userId).getExpirationDate().getTimeInMillis();
     }
 
     @Transactional
