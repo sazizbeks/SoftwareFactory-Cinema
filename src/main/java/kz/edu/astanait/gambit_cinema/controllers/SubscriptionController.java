@@ -21,11 +21,17 @@ public class SubscriptionController {
     private final ISubscriptionService subscriptionService;
 
     @GetMapping("")
-    public String showSubscription(){
+    public String showSubscription(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+
+        try {
+            model.addAttribute("subscription",subscriptionService.getSubscription(user.getId()));
+        } catch (NotFoundException e) {
+            model.addAttribute("subscription", null);
+        }
         return "subscription";
     }
 
-    //This method may be reformatted
     @GetMapping("/check")
     public String checkExpDate(HttpSession session,Model model){
         User user = (User) session.getAttribute("user");

@@ -19,7 +19,7 @@
 
 <div class="main container mt-5 mb-5">
 
-    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    <div th:if="${subscription==null}" class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <div class="col">
             <div class="card mb-4 rounded-3 shadow-sm bg-dark">
                 <div class="card-header py-3">
@@ -66,7 +66,12 @@
             </div>
         </div>
     </div>
-
+    <div th:if="${subscription!=null}" class="bg-dark p-3">
+        <p th:text="${'You have a subscription until '+subscription.expirationDate.get(subscription.expirationDate.DAY_OF_MONTH)+'.'+(subscription.expirationDate.get(subscription.expirationDate.MONTH)+1)+'.'+subscription.expirationDate.get(subscription.expirationDate.YEAR)}" class="text-white"></p>
+        <form action="/subscription/cancel" method="post">
+            <button type="submit" class="btn btn-danger">Cancel subscription</button>
+        </form>
+    </div>
 </div>
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
