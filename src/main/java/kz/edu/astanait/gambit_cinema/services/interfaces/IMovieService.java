@@ -16,6 +16,9 @@ public interface IMovieService {
     void edit(Movie movie) throws BadRequestException;
     void delete(Movie movie) throws BadRequestException;
     MoviePageDto getMoviePageDtoById(Long movieId, Long userId) throws BadRequestException;
+
+    List<MoviePageDto> getAllMoviePageDto(Long userId);
+
     Movie getMovieById(Long id) throws BadRequestException;
     Movie getRandomMovie(Set<Genre> genres) throws NotFoundException;
     List<Movie> searchMovies(String searchInput);

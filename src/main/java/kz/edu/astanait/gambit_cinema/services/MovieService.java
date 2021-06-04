@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService implements IMovieService {
@@ -44,6 +45,17 @@ public class MovieService implements IMovieService {
                     .build();
         }
         throw new BadRequestException("No such ID");
+    }
+
+    @Override
+    public List<MoviePageDto> getAllMoviePageDto(Long userId) {
+        List<Movie> movies = movieRepository.findAll();
+
+        return movies.stream().map(movie -> MoviePageDto.builder()
+                .movie(movie)
+                .feedbacks(feedbackService.getFeedbackDtos(movie))
+                .isFavorite(movieRepository.favoriteMovieExists(userId, movie.getId()))
+                .build()).collect(Collectors.toList());
     }
 
     @Override

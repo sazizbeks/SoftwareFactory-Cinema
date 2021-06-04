@@ -34,12 +34,19 @@ public class MovieAPI {
     @GetMapping("/{movieId}")
     public ResponseEntity<?> getMovieById(@PathVariable Long movieId, @RequestParam("u") Long userId) {
         try {
-            MoviePageDto movie = movieService.getMoviePageDtoById(movieId,userId);
+            MoviePageDto movie = movieService.getMoviePageDtoById(movieId, userId);
             return ResponseEntity
                     .ok(movie);
         } catch (BadRequestException e) {
             return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
         }
+    }
+
+    @GetMapping("/get-all")
+    public ResponseEntity<?> getAll(@RequestParam("u") Long userId) {
+        List<MoviePageDto> movie = movieService.getAllMoviePageDto(userId);
+        return ResponseEntity
+                .ok(movie);
     }
 
     @GetMapping("/random")
