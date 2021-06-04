@@ -4,6 +4,7 @@ import javassist.NotFoundException;
 import kz.edu.astanait.gambit_cinema.models.Subscription;
 import kz.edu.astanait.gambit_cinema.models.User;
 import kz.edu.astanait.gambit_cinema.repositories.SubscriptionRepository;
+import kz.edu.astanait.gambit_cinema.repositories.UserRepository;
 import kz.edu.astanait.gambit_cinema.services.interfaces.ISubscriptionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Calendar;
 @AllArgsConstructor
 public class SubscriptionService implements ISubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Subscription buy(Long userId, int month) {
@@ -22,6 +24,9 @@ public class SubscriptionService implements ISubscriptionService {
                 .user(User.builder().id(userId).build())
                 .expirationDate(getNewExpirationDate(month))
                 .build();
+        User user = userRepository.findById(userId).get();
+        user.setSubscribed(true);
+        userRepository.save(user);
         subscriptionRepository.save(subscription);
         return subscription;
     }
@@ -36,6 +41,10 @@ public class SubscriptionService implements ISubscriptionService {
     public void cancel(Long userId) throws NotFoundException {
         Subscription subscription = getSubscription(userId);
         subscriptionRepository.delete(subscription);
+
+        User user = userRepository.findById(userId).get();
+        user.setSubscribed(false);
+        userRepository.save(user);
     }
 
     @Override

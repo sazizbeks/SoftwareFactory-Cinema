@@ -14,7 +14,7 @@ import java.util.Set;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> getDistinctByGenresIn(Set<Genre> genres);
 
-    List<Movie> findMoviesByNameContaining(String searchInput);
+    List<Movie> findMoviesByNameContainingIgnoreCase(String searchInput);
 
     @Query(value = "select case when count(f)>0 then true else false end from favorite_movies f where user_id=:userId and movie_id=:movieId",
             nativeQuery = true)

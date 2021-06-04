@@ -93,7 +93,7 @@ public class MovieService implements IMovieService {
 
     @Override
     public List<Movie> searchMovies(String searchInput) {
-        return movieRepository.findMoviesByNameContaining(searchInput);
+        return movieRepository.findMoviesByNameContainingIgnoreCase(searchInput);
     }
 
     @Transactional

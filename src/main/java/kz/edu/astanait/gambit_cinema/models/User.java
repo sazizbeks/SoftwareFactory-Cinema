@@ -63,6 +63,9 @@ public class User {
     )
     private Set<Movie> favoriteMovies;
 
+    @Column(columnDefinition = "boolean default false")
+    private Boolean subscribed;
+
     public Set<GrantedAuthority> getGrantedAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = role.getAuthorities().stream()
                 .map(a -> new SimpleGrantedAuthority(a.getName()))

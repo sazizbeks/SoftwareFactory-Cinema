@@ -104,6 +104,19 @@
                 allowfullscreen></iframe>
     </div>
 
+
+    <div th:if="${session.user.subscribed==true}" class="media-player mt-4">
+        <iframe width="100%" height="550" th:src="'https://www.youtube.com/embed/'+${movieDto.movie.youtubeMovieKey}"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+    </div>
+
+    <p th:if="${!session.user.subscribed}" class="bg-dark py-4 px-3">
+        <a href="/subscription/" class="text-white">You need to be subscribed to watch movie.</a>
+    </p>
+
     <div class="feedback-box mt-4 bg-dark">
         <div class="row">
             <div class="col-md-3"></div>

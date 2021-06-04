@@ -8,7 +8,10 @@ import kz.edu.astanait.gambit_cinema.tools.StaticValues;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -54,6 +57,9 @@ public class SubscriptionController {
         User user = (User) session.getAttribute("user");
         subscriptionService.buy(user.getId(), month);
         model.addAttribute("message", "You have successfully subscribed for " + month + " months");
+
+        user.setSubscribed(true);
+        session.setAttribute("user",user);
         return StaticValues.Templates.SPLASH_SCREEN_TEMPLATE;
     }
 
@@ -76,6 +82,9 @@ public class SubscriptionController {
         try {
             subscriptionService.cancel(user.getId());
             model.addAttribute("message", "You have successfully canceled your subscription.");
+
+            user.setSubscribed(false);
+            session.setAttribute("user",user);
         } catch (NotFoundException e) {
             model.addAttribute("message", "Something went wrong.");
         }

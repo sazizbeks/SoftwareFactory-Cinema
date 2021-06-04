@@ -75,9 +75,11 @@ public class Movie {
             message = "Trailer key cannot be empty")
     @Size(groups = {ValidationMarkers.OnCreate.class,
             ValidationMarkers.OnUpdate.class},
-            message = "Minimum length = 1, maximum length = 64",min = 1, max = 64)
+            message = "Minimum length = 1, maximum length = 64", min = 1, max = 64)
     @Column(length = 64)
     private String youtubeTrailerKey;
+
+    private String youtubeMovieKey;
 
     public Movie() {
     }
