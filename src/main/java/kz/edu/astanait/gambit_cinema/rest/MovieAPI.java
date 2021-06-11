@@ -9,6 +9,7 @@ import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
 import kz.edu.astanait.gambit_cinema.tools.ExceptionManager;
+import kz.edu.astanait.gambit_cinema.tools.MoviePageDtoList;
 import kz.edu.astanait.gambit_cinema.validation.ValidationMarkers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,9 +45,9 @@ public class MovieAPI {
 
     @GetMapping("/get-all")
     public ResponseEntity<?> getAll(@RequestParam("u") Long userId) {
-        List<MoviePageDto> movie = movieService.getAllMoviePageDto(userId);
+        List<MoviePageDto> movies = movieService.getAllMoviePageDto(userId);
         return ResponseEntity
-                .ok(movie);
+                .ok(new MoviePageDtoList(movies));
     }
 
     @GetMapping("/random")
