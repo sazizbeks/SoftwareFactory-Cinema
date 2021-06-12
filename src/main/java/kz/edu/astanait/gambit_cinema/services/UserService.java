@@ -24,7 +24,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void register(User user) throws UserExistsException, PasswordConfirmationException, BirthDateException {
+    public User register(User user) throws UserExistsException, PasswordConfirmationException, BirthDateException {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserExistsException("User with such username exists");
         }
@@ -38,7 +38,7 @@ public class UserService implements IUserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(roleRepository.findByName("USER"));
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

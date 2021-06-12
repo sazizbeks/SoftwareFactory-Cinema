@@ -11,8 +11,9 @@ public interface IUserService {
      *                               It's thrown when:
      *                               1) username is null or empty
      *                               2) user with user.username username is exists in database
+     * @return
      */
-    void register(User user) throws UserExistsException, PasswordConfirmationException, BirthDateException;
+    User register(User user) throws UserExistsException, PasswordConfirmationException, BirthDateException;
 
     /**
      * Checks if inputs are valid, then returns user
