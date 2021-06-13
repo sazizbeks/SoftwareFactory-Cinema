@@ -5,6 +5,7 @@ import kz.edu.astanait.gambit_cinema.dto.SubscriptionDto;
 import kz.edu.astanait.gambit_cinema.models.Subscription;
 import kz.edu.astanait.gambit_cinema.services.interfaces.ISubscriptionService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,16 @@ import org.springframework.web.bind.annotation.*;
 public class SubscriptionAPI {
     private final ISubscriptionService subscriptionService;
 
+    @Data
+    @AllArgsConstructor
+    private class ExpDateHolder{
+        Long data;
+    }
+
     @GetMapping("/check/{userId}")
     public ResponseEntity<?> checkExpirationDate(@PathVariable Long userId) {
         try {
-            return ResponseEntity.ok(subscriptionService.checkExpirationDate(userId));
+            return ResponseEntity.ok(new ExpDateHolder(subscriptionService.checkExpirationDate(userId)));
         } catch (NotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
