@@ -51,10 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/registration",
                         "/api/user/registration/with-subscription",
                         "/api/user/login").not().authenticated()
-                .antMatchers("/api/movie/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/feedback/add").permitAll()
-                .antMatchers("/api/subscription/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/**").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/feedback/add").authenticated()
                 .antMatchers(HttpMethod.POST,"/update-favorite").permitAll()
