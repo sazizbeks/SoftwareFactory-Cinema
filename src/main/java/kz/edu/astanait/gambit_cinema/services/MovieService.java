@@ -123,14 +123,6 @@ public class MovieService implements IMovieService {
         return !exists;
     }
 
-    @Override
-    public void saveFavoriteMoviesToDb(List<FavoriteMovieIdsDto> dtoList) {
-        dtoList.forEach(dto -> {
-            if (!movieRepository.favoriteMovieExists(dto.getUserId(), dto.getMovieId())) {
-                movieRepository.addMovieToFavoriteList(dto.getUserId(), dto.getMovieId());
-            }
-        });
-    }
 
     @Override
     public Set<Movie> getFavList(Long id) {

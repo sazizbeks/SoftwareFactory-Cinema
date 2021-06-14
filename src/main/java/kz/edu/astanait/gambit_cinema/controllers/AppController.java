@@ -20,14 +20,14 @@ public class AppController {
 
     @GetMapping({"/index","/"})
     public String showIndex(Model model){
-        String[] genreNames = {"action","horror","fantasy","comedy","animation"};
-        HashMap<String,List<Movie>> movies = new HashMap<>();
-
-        for (String genreName : genreNames) {
-            movies.put(genreName,movieService.getMovieByGenre(genreName));
-        }
-
-        model.addAttribute("movies",movies);
+//        String[] genreNames = {"action","horror","fantasy","comedy","animation"};
+//        HashMap<String,List<Movie>> movies = new HashMap<>();
+//
+//        for (String genreName : genreNames) {
+//            movies.put(genreName,movieService.getMovieByGenre(genreName));
+//        }
+//
+//        model.addAttribute("movies",movies);
 
         return "index";
     }

@@ -26,22 +26,22 @@
     <div class="carousel-inner mt-3">
 
         <div class="carousel-item active carouselItem" data-bs-interval="2000">
-            <div class="overlay-image" id="overlayImage" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/252820/1320x580-77.jfif);"></div>
+            <div class="overlay-image" id="overlayImage" style="background-image: url(https://image.tmdb.org/t/p/w500/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg);"></div>
             <div class="container carouselContainer">
-                <h1>First Slide</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum facilis quisquam mollitia nobis totam voluptatum dicta illo assumenda laboriosam ipsum distinctio, voluptate, amet recusandae accusamus inventore est! Dolorem, consequuntur ab?</p>
-                <a href="#" class="btn btn-lg btn-outline-info">
+                <h1>Raya and The Last Dragon</h1>
+                <p>Long ago, in the fantasy world of Kumandra, humans and dragons lived together in harmony. But when an evil force threatened the land, the dragons sacrificed themselves to save humanity. Now, 500 years later, that same evil has returned and it￢ﾀﾙs up to a lone warrior, Raya, to track down the legendary last dragon to restore the fractured land and its divided people.</p>
+                <a href="/movie/5" class="btn btn-lg btn-outline-info">
                     Go to movie
                 </a>
             </div>
         </div>
 
         <div class="carousel-item carouselItem" data-bs-interval="2000">
-            <div class="overlay-image" style="background-image: url('https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg');"></div>
+            <div class="overlay-image" style="background-image: url('https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg');"></div>
             <div class="container carouselContainer">
-                <h1>Second Slide</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum facilis quisquam mollitia nobis totam voluptatum dicta illo assumenda laboriosam ipsum distinctio, voluptate, amet recusandae accusamus inventore est! Dolorem, consequuntur ab?</p>
-                <a href="#" class="btn btn-lg btn-outline-info">
+                <h1>Avengers</h1>
+                <p>After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.</p>
+                <a href="/movie/8" class="btn btn-lg btn-outline-info">
                     Go to movie
                 </a>
             </div>
@@ -63,17 +63,26 @@
 
 <div class="container main mt-5 mb-5 bg-dark">
 
-    <div id="movieSlider" class="carousel slide carousel-fade" data-ride="carousel">
+    <div id="movieSlider1" class="carousel slide carousel-fade movieSlider" data-ride="carousel">
 
-        <div class="carousel-inner" th:each="map : ${movies}">
+        <div class="carousel-inner">
 
             <div class="row text-center">
-                <h5 class="text-light" th:text="${map.key}">GenreName</h5>
+                <h5 class="text-light">Action</h5>
             </div>
             <div class="carousel-item active">
                 <div class="row">
-                    <div class="col-3" th:each="movie : ${map.value}">
-                        <a th:href="@{/movie/{id}(id=${movie.id})}"><img th:src="${movie.imgUrl}" class="movie"></a>
+                    <div class="col-3">
+                        <a href="/movie/5"><img src="https://image.tmdb.org/t/p/w500/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/8"><img src="https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/6"><img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/2"><img src="https://image.tmdb.org/t/p/w500/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg" class="movie"></a>
                     </div>
                 </div>
             </div>
@@ -81,28 +90,144 @@
             <div class="carousel-item">
                 <div class="row">
                     <div class="col-md-3">
-                        <img src="https://www.joblo.com/assets/images/joblo/news/2020/06/URiXYTtX.jpeg" class="movie">
+                        <a href="/movie/1"><img src="https://image.tmdb.org/t/p/w500/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg" class="movie"></a>
                     </div>
                     <div class="col-md-3">
-                        <img src="https://i.redd.it/3fl2s0q1ug661.jpg" class="movie">
+                        <a href="/movie/11"><img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" class="movie"></a>
                     </div>
                     <div class="col-md-3">
-                        <img src="https://www.joblo.com/assets/images/joblo/posters/2019/10/jungle-cruise-poster.jpg" class="movie">
+                        <a href="/movie/4"><img src="https://image.tmdb.org/t/p/w500/8yhtzsbBExY8mUct2GOk4LDDuGH.jpg" class="movie"></a>
                     </div>
                     <div class="col-md-3">
-                        <img src="https://oyster.ignimgs.com/wordpress/stg.ign.com/2021/02/MK_VERT_MAIN_2764x4096_INTL.jpg" class="movie">
+                        <a href="/movie/12"><img src="https://image.tmdb.org/t/p/w500/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg" class="movie"></a>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <a href="#movieSlider" class="carousel-control-prev" role="button" data-bs-slide="prev">
+        <a href="#movieSlider1" class="carousel-control-prev" role="button" data-bs-slide="prev">
             <span class="visually-hidden-focusable">Previous</span>
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         </a>
 
-        <a href="#movieSlider" class="carousel-control-next" role="button" data-bs-slide="next">
+        <a href="#movieSlider1" class="carousel-control-next" role="button" data-bs-slide="next">
+            <span class="visually-hidden-focusable">Previous</span>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+
+    </div>
+
+    <div id="movieSlider3" class="carousel slide carousel-fade movieSlider mt-2" data-ride="carousel">
+
+        <div class="carousel-inner">
+
+            <div class="row text-center">
+                <h5 class="text-light">Fantasy</h5>
+            </div>
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-3">
+                        <a href="/movie/5"><img src="https://image.tmdb.org/t/p/w500/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/6"><img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/2"><img src="https://image.tmdb.org/t/p/w500/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/4"><img src="https://image.tmdb.org/t/p/w500/8yhtzsbBExY8mUct2GOk4LDDuGH.jpg" class="movie"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-3">
+                        <a href="/movie/5"><img src="https://image.tmdb.org/t/p/w500/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/6"><img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/2"><img src="https://image.tmdb.org/t/p/w500/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/4"><img src="https://image.tmdb.org/t/p/w500/8yhtzsbBExY8mUct2GOk4LDDuGH.jpg" class="movie"></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="#movieSlider3" class="carousel-control-prev" role="button" data-bs-slide="prev">
+            <span class="visually-hidden-focusable">Previous</span>
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+
+        <a href="#movieSlider3" class="carousel-control-next" role="button" data-bs-slide="next">
+            <span class="visually-hidden-focusable">Previous</span>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+
+    </div>
+
+    <div id="movieSlider4" class="carousel slide carousel-fade movieSlider mt-2" data-ride="carousel">
+
+        <div class="carousel-inner">
+
+            <div class="row text-center">
+                <h5 class="text-light">Comedy</h5>
+            </div>
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-3">
+                        <a href="/movie/10"><img src="https://image.tmdb.org/t/p/w500/6KErczPBROQty7QoIsaa6wJYXZi.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/11"></a>
+                        <img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" class="movie">
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/11"></a>
+                        <img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" class="movie">
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/11"></a>
+                        <img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" class="movie">
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-3">
+                        <a href="/movie/10"><img src="https://image.tmdb.org/t/p/w500/6KErczPBROQty7QoIsaa6wJYXZi.jpg" class="movie"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/11"></a>
+                        <img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" class="movie">
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/11"></a>
+                        <img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" class="movie">
+                    </div>
+                    <div class="col-3">
+                        <a href="/movie/11"></a>
+                        <img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" class="movie">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="#movieSlider4" class="carousel-control-prev" role="button" data-bs-slide="prev">
+            <span class="visually-hidden-focusable">Previous</span>
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+
+        <a href="#movieSlider4" class="carousel-control-next" role="button" data-bs-slide="next">
             <span class="visually-hidden-focusable">Previous</span>
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </a>
