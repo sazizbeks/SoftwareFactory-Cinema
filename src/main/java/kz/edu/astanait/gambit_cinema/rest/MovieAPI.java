@@ -2,8 +2,6 @@ package kz.edu.astanait.gambit_cinema.rest;
 
 import javassist.NotFoundException;
 import kz.edu.astanait.gambit_cinema.dto.MoviePageDto;
-import kz.edu.astanait.gambit_cinema.dto.favoritelist.FavoriteMovieIdsDto;
-import kz.edu.astanait.gambit_cinema.dto.favoritelist.UpdateFavoriteResponse;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
@@ -18,10 +16,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * MovieAPI rest controller class
+ * REST API class for working with movies
+ */
 @RestController
 @RequestMapping("/api/movie")
 public class MovieAPI {
@@ -32,6 +33,13 @@ public class MovieAPI {
         this.movieService = movieService;
     }
 
+    /**
+     * /api/movie/{movieId}?u={userId}
+     * Gets movie by movie id
+     * @param movieId id of movie
+     * @param userId id of user to identify if a movie favorite for user
+     * @return response. movie object if OK
+     */
     @GetMapping("/{movieId}")
     public ResponseEntity<?> getMovieById(@PathVariable Long movieId, @RequestParam("u") Long userId) {
         try {
@@ -43,6 +51,12 @@ public class MovieAPI {
         }
     }
 
+    /**
+     * /api/movie/get-all
+     * Gets all movies
+     * @param userId id of user to identify if a movie favorite for user
+     * @return List of movie
+     */
     @GetMapping("/get-all")
     public ResponseEntity<?> getAll(@RequestParam("u") Long userId) {
         List<MoviePageDto> movies = movieService.getAllMoviePageDto(userId);
@@ -50,6 +64,12 @@ public class MovieAPI {
                 .ok(new MoviePageDtoList(movies));
     }
 
+    /**
+     * /api/movie/random
+     * Gets random movie based on genres that client selected
+     * @param genres selected genres
+     * @return random movie
+     */
     @GetMapping("/random")
     public ResponseEntity<?> count(@RequestBody Set<Genre> genres) {
         try {
@@ -59,6 +79,11 @@ public class MovieAPI {
         }
     }
 
+    /**
+     * /api/movie/add
+     * @param movie movie to add
+     * @return movie
+     */
     @PostMapping("/add")
     public ResponseEntity<?> addMovie(@RequestBody @Validated({ValidationMarkers.OnCreate.class,
             ValidationMarkers.APIOnCreate.class}) Movie movie,
@@ -74,6 +99,12 @@ public class MovieAPI {
         }
     }
 
+    /**
+     * /api/movie/edit
+     * Edits movie
+     * @param movie movie to be edited
+     * @return movie
+     */
     @PutMapping("/edit")
     public ResponseEntity<?> editMovie(@RequestBody @Validated({ValidationMarkers.OnUpdate.class,
             ValidationMarkers.APIOnUpdate.class}) Movie movie,
@@ -90,6 +121,12 @@ public class MovieAPI {
         }
     }
 
+    /**
+     * /api/movie/delete
+     * Deletes movie
+     * @param movie movie to be deleted
+     * @return response
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteMovie(@RequestBody Movie movie) {
         try {
@@ -98,18 +135,5 @@ public class MovieAPI {
         } catch (BadRequestException e) {
             return ExceptionManager.getResponseEntity(HttpStatus.BAD_REQUEST, e);
         }
-    }
-
-    @Transactional
-    @PostMapping("/save-favorite")
-    public ResponseEntity<?> saveFavoriteListToDb(@RequestBody List<FavoriteMovieIdsDto> dtoList) {
-        movieService.saveFavoriteMoviesToDb(dtoList);
-
-        return ResponseEntity.ok(
-                UpdateFavoriteResponse.builder().
-                        resultMessage("Successfully added to favorite list")
-                        .isAdded(true)
-                        .build()
-        );
     }
 }

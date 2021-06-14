@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * UserAPI rest controller class
+ * REST API class for working with user
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserAPI {
@@ -27,6 +31,12 @@ public class UserAPI {
         this.subscriptionService = subscriptionService;
     }
 
+    /**
+     * /api/user/registration
+     * Registers new user
+     * @param user user to be registered
+     * @return user if OK
+     */
     @PostMapping(path = "/registration", consumes = "application/json")
     public ResponseEntity<?> register(@RequestBody @Validated(ValidationMarkers.OnRegistration.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -40,6 +50,12 @@ public class UserAPI {
         }
     }
 
+    /**
+     * /api/user/registration/with-subscription
+     * Registers new user with subscription
+     * @param registrationWithSubscriptionDto dto which holds user and subscription information
+     * @return registered user
+     */
     @PostMapping(path = "/registration/with-subscription", consumes = "application/json")
     public ResponseEntity<?> register(@RequestBody RegistrationWithSubscriptionDto registrationWithSubscriptionDto) {
         try {
@@ -51,6 +67,12 @@ public class UserAPI {
         }
     }
 
+    /**
+     * /api/user/login
+     * Logins user to application
+     * @param user user to login
+     * @return validated user
+     */
     @PostMapping(path = "/login", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody @Validated(ValidationMarkers.OnLogin.class) User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
