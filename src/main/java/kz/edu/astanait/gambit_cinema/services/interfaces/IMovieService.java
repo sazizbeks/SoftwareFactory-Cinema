@@ -24,8 +24,5 @@ public interface IMovieService {
     List<Movie> searchMovies(String searchInput);
     boolean addOrDeleteMovieInFavoriteList(Long userId, Long movieId);
 
-    @Transactional
-    void saveFavoriteMoviesToDb(List<FavoriteMovieIdsDto> dtoList);
-
     Set<Movie> getFavList(Long id);
 }

@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * FeedbackAPI rest controller class
+ * REST API class for working with feedbacks
+ */
 @RestController
 @RequestMapping("/api/feedback")
 public class FeedbackAPI {
@@ -18,6 +22,11 @@ public class FeedbackAPI {
         this.feedbackService = feedbackService;
     }
 
+    /**
+     * /api/feedback/add
+     * Adds feedback to movie
+     * @param feedback feedback to be added
+     */
     @PostMapping("/add")
     public void addFeedback(@RequestBody Feedback feedback) {
         feedbackService.add(feedback);

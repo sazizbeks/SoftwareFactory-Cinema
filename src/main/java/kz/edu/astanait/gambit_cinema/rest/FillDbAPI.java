@@ -14,23 +14,29 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * FillDbAPI rest controller class
+ * REST API class for data parsing and database fill
+ */
 @RestController
 @RequestMapping("/api/admin/fillDB")
 public class FillDbAPI {
-    private final ApiParser apiParser;
     private final JsonParser jsonParser;
-
     private final GenreRepository genreRepository;
     private final MovieRepository movieRepository;
 
     @Autowired
-    public FillDbAPI(ApiParser apiParser, JsonParser jsonParser, GenreRepository genreRepository, MovieRepository movieRepository) {
-        this.apiParser = apiParser;
+    public FillDbAPI(JsonParser jsonParser, GenreRepository genreRepository, MovieRepository movieRepository) {
         this.jsonParser = jsonParser;
         this.genreRepository = genreRepository;
         this.movieRepository = movieRepository;
     }
 
+    /**
+     * /api/admin/fillDB/genres
+     * Adds genres to DB
+     * @return response
+     */
     @GetMapping("/genres")
     public ResponseEntity<?> fillGenres() {
         if (genreRepository.count() == 0) {
@@ -45,6 +51,11 @@ public class FillDbAPI {
         return ResponseEntity.ok("Genres already exist");
     }
 
+    /**
+     * /api/admin/fillDB/movies
+     * Adds movies to DB
+     * @return response
+     */
     @GetMapping("/movies")
     public ResponseEntity<?> fillMovies() {
         if (movieRepository.count() == 0) {

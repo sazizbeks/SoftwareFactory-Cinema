@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * AppAPI rest controller class
+ * General REST API class to use both in web and mobile sides
+ */
 @RestController
 public class AppAPI {
     private final IMovieService movieService;
@@ -17,6 +21,12 @@ public class AppAPI {
         this.movieService = movieService;
     }
 
+    /**
+     * /update-favorite
+     * Switches favorite of movie
+     * @param dto FavoriteMovieIdsDto to switch favorite of movie of user
+     * @return ResponseEntity response
+     */
     @ResponseBody
     @PostMapping("/update-favorite")
     public ResponseEntity<?> updateFavorite(@RequestBody FavoriteMovieIdsDto dto) {
