@@ -6,6 +6,7 @@ import kz.edu.astanait.gambit_cinema.dto.favoritelist.FavoriteMovieIdsDto;
 import kz.edu.astanait.gambit_cinema.exceptions.BadRequestException;
 import kz.edu.astanait.gambit_cinema.models.Genre;
 import kz.edu.astanait.gambit_cinema.models.Movie;
+import kz.edu.astanait.gambit_cinema.repositories.GenreRepository;
 import kz.edu.astanait.gambit_cinema.repositories.MovieRepository;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IFeedbackService;
 import kz.edu.astanait.gambit_cinema.services.interfaces.IMovieService;
@@ -25,11 +26,13 @@ public class MovieService implements IMovieService {
     private final MovieRepository movieRepository;
     private final IFeedbackService feedbackService;
     private final Random random;
+    private final GenreRepository genreRepository;
 
     @Autowired
-    public MovieService(MovieRepository movieRepository, IFeedbackService feedbackService) {
+    public MovieService(MovieRepository movieRepository, IFeedbackService feedbackService, GenreRepository genreRepository) {
         this.movieRepository = movieRepository;
         this.feedbackService = feedbackService;
+        this.genreRepository = genreRepository;
         this.random = new Random();
     }
 
@@ -134,5 +137,9 @@ public class MovieService implements IMovieService {
         return movieRepository.getFavList(id);
     }
 
+    @Override
+    public List<Movie> getMovieByGenre(String genreName) {
+        return movieRepository.findMovieByGenresContaining(genreRepository.findByName(genreName));
+    }
 
 }

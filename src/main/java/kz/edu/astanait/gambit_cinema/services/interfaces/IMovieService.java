@@ -28,4 +28,5 @@ public interface IMovieService {
     void saveFavoriteMoviesToDb(List<FavoriteMovieIdsDto> dtoList);
 
     Set<Movie> getFavList(Long id);
+    List<Movie> getMovieByGenre(String genreName);
 }

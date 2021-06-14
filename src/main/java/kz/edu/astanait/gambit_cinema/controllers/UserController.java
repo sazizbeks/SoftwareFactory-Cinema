@@ -30,11 +30,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/index")
-    public String showIndex(){
-        return "index";
-    }
-
     @GetMapping("/registration")
     public ModelAndView showRegistrationPage() {
         ModelAndView mav = new ModelAndView("registration");

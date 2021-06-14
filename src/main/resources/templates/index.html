@@ -65,21 +65,15 @@
 
     <div id="movieSlider" class="carousel slide carousel-fade" data-ride="carousel">
 
-        <div class="carousel-inner">
+        <div class="carousel-inner" th:each="map : ${movies}">
 
+            <div class="row text-center">
+                <h5 class="text-light" th:text="${map.key}">GenreName</h5>
+            </div>
             <div class="carousel-item active">
                 <div class="row">
-                    <div class="col-3">
-                        <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg?ts=1576732289" class="movie">
-                    </div>
-                    <div class="col-3">
-                        <img src="https://cdn11.bigcommerce.com/s-ydriczk/images/stencil/1280x1280/products/88997/93196/Avengers-Endgame-Final-Style-Poster-buy-original-movie-posters-at-starstills__42370.1563973516.jpg?c=2" class="movie">
-                    </div>
-                    <div class="col-3">
-                        <img src="https://images-na.ssl-images-amazon.com/images/I/91jatiUZjtL._AC_SL1500_.jpg" class="movie">
-                    </div>
-                    <div class="col-3">
-                        <img src="https://images.moviepostershop.com/replicas-movie-poster-1000778791.jpg" class="movie">
+                    <div class="col-3" th:each="movie : ${map.value}">
+                        <a th:href="@{/movie/{id}(id=${movie.id})}"><img th:src="${movie.imgUrl}" class="movie"></a>
                     </div>
                 </div>
             </div>

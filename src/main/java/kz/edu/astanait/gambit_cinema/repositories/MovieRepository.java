@@ -32,4 +32,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query(value = "select m.* from movies m join favorite_movies fm on m.id = fm.movie_id where fm.user_id =:id", nativeQuery = true)
     Set<Movie> getFavList(Long id);
+
+    List<Movie> findMovieByGenresContaining(Genre genre);
 }
